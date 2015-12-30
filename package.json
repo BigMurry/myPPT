@@ -3,17 +3,21 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start":"webpack-dev-server"
+    "start": "webpack-dev-server"
   },
   "dependencies": {
     "babel-preset-react": "^6.3.13",
     "babelify": "^7.2.0",
     "react": "^0.14.3",
-    "react-dom": "^0.14.3"
+    "react-dom": "^0.14.3",
+    "redux-thunk": "^1.0.3"
   },
   "devDependencies": {
     "babel-core": "^6.3.26",
     "babel-loader": "^6.2.0",
+    "file-loader": "^0.8.5",
+    "raw-loader": "^0.5.1",
+    "style-loader": "^0.13.0",
     "webpack": "^1.12.9"
   }
 }

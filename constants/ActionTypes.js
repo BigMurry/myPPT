@@ -1,2 +1,3 @@
 export const FORWARD = "FORWARD"
-export const BACK = "BACK"
+export const BACKWARD = "BACKWARD"
+export const SETSLIDES = "SETSLIDES"

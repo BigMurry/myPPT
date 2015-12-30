@@ -1,0 +1,26 @@
+{
+  "header":{
+    "title":"Coding under Nodejs",
+    "subtitle":"A introduction to the Nodejs coding environment"
+  },
+  "author":{
+    "name":"Murry.Diao",
+    "email":"murry.diao@avepoint.com"
+  },
+  "footer":{
+    "company":"Avepoint Shanghai Office",
+    "revision":"2015/12/30"
+  },
+  "slides":[
+    {
+      "title":"Outlines",
+      "content":"##What is Nodejs\n##Environment Elements\n###Reactjs\n###Redux\n##Coding with pleasure"
+    },{
+      "title":"Rocks",
+      "content":"npm init"
+    },{
+      "title":"What is Nodejs",
+      "content":"foo"
+    }
+  ]
+}
