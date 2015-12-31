@@ -3,6 +3,7 @@ var path = require('path')
 var app = express()
 var port = 4500
 
+//serve static files
 app.use(express.static(path.join(__dirname, 'dist')))
 
 app.get('/',function(req, res){
