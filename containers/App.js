@@ -1,9 +1,9 @@
 import React from 'react'
-import Main from '../Components/Main'
-import Header from '../Components/Header'
-import Footer from '../Components/Footer'
+import Main from '../components/Main'
+import Header from '../components/Header'
+import Footer from '../components/Footer'
 import {connect} from 'react-redux'
-import {fetchSlidesIfNeeded} from '../actions/navigator'
+import {fetchSlidesIfNeeded} from '../actions/slides'
 
 let{
   Component
@@ -24,7 +24,7 @@ class App extends Component{
     return (
       <div className="container">
         <Header header={header}/>
-        <Main slides={slides} author={author} step={step} dispatch={dispatch}/>
+        <Main slides={slides} header={header} author={author} step={step} dispatch={dispatch}/>
         <Footer footer={footer} />
       </div>
     )

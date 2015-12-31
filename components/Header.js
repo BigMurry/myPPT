@@ -1,6 +1,4 @@
 import React from 'react'
-
-
 let{
   Component,
   PropTypes
@@ -36,4 +34,11 @@ const styles = {
   item:{
     flex:1
   }
+}
+
+Header.propTypes = {
+  header: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    subtitle: PropTypes.string.isRequired
+  }).isRequired
 }

@@ -5,14 +5,18 @@ const initialState = {
 }
 
 export default function navigator(state=initialState, action){
+  let step = 0
   switch(action.type){
     case types.FORWARD:
-      let step = state.currentStep + action.step
+      step = state.currentStep + action.step
       step = step > 0 ? step : 0
       return Object.assign({}, state, {currentStep: step})
     case types.BACKWARD:
-      let step = state.currentStep - action.step
+      step = state.currentStep - action.step
       step = step > 0 ? step : 0
+      return Object.assign({}, state, {currentStep: step})
+    case types.GOTO:
+      step = action.step >=0 ? action.step : 0
       return Object.assign({}, state, {currentStep: step})
     default:
       return state
