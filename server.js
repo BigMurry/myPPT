@@ -1,5 +1,9 @@
-var app = new (require('express'))()
+var express = require('express')
+var path = require('path')
+var app = express()
 var port = 4500
+
+app.use(express.static(path.join(__dirname, 'dist')))
 
 app.get('/',function(req, res){
   res.sendFile(__dirname + '/index.html')
