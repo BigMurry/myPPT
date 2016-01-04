@@ -10,18 +10,21 @@
   },
   "footer":{
     "company":"Avepoint Shanghai Office",
-    "revision":"2015/12/30"
+    "revision":"2015/4/1"
   },
   "slides":[
     {
       "title":"Outlines",
-      "content":"##What is Nodejs\n##Environment Elements\n###Reactjs\n###Redux\n##Coding with pleasure"
+      "content":"## What is Nodejs\n ## Environment Elements\n ### Reactjs\n ### Redux\n ## Coding with pleasure\n"
     },{
       "title":"Rocks",
-      "content":"npm init"
+      "content":"npm init, and so what ..., nothing happens, er ..., finally..\n ### Let's rock!\n # Can't be more funny!!!"
     },{
       "title":"What is Nodejs",
-      "content":"foo"
+      "content":"# Let's Rock!"
+    },{
+      "title":"Code Demo",
+      "content":"`function foo(){\n\tthis.one();\n}`"
     }
   ]
 }

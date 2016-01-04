@@ -32,8 +32,8 @@ const styles = {
 
 QuickNav.propTypes = {
   slides: PropTypes.arrayOf({
-    title: PropTypes.string.isRequired,
-    content: PropTypes.string.isRequired
+    title: PropTypes.string,
+    content: PropTypes.string
   }),
   step: PropTypes.number.isRequired
 }

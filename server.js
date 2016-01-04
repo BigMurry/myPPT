@@ -4,7 +4,8 @@ var config = require('./webpack.config')
 var webpackDevMiddleware = require('webpack-dev-middleware')
 var webpackHotMiddleware= require('webpack-hot-middleware')
 
-var app = new (require('express'))()
+var express = require('express')
+var app = express()
 var port = 4500
 
 var compiler = webpack(config)

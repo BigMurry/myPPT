@@ -1,5 +1,5 @@
 import React from 'react'
-import marked from '../utils/tools'
+import {marked} from '../utils/tools'
 
 let{
   Component,
@@ -9,36 +9,27 @@ let{
 export default class Content extends Component{
   constructor(props){
     super(props)
-    this.renderContent = this.renderContent.bind(this)
+    this.getMarkup= this.getMarkup.bind(this)
   }
-  renderContent(slideContent){
-    return marked(slideContent)
+  getMarkup(){
+    const {content} = this.props
+    return {
+      __html: marked(content)
+    }
   }
   render(){
-    const {slideContent} = this.props
-
     return(
-      <div style={styles.outer}>
-        <div style={styles.container}>
-          {this.renderContent(slideContent)}
-        </div>
-      </div>
+      <div style={styles.container} dangerouslySetInnerHTML={this.getMarkup()} />
     )
   }
 }
 
 const styles = {
-  outer:{
-    flex:1,
-    flexDirection: 'column'
-  },
   container:{
-    flex:1,
-    backgroundColor:'rgb(0, 0, 0)',
-    fontColor:'rgb(250, 195, 0)'
+    margin:10
   }
 }
 
 Content.propTypes = {
-  slideContent: PropTypes.string.isRequired
+  content: PropTypes.string
 }

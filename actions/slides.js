@@ -1,9 +1,13 @@
 import * as types from '../constants/ActionTypes'
 import slidesUrl from '../resources/slides.json'
+import path from 'path'
 
-export function fetchSlidesIfNeeded(slides){
+export function fetchSlidesIfNeeded(){
   return (dispatch, getState) => {
-    if(!slides || !slides.slides || slides.slides.length === 0){
+    let state = getState()
+    let newId = path.basename(slidesUrl, '.json')
+    if(state.slides.id !== newId){
+      dispatch(setFileId(newId))
       dispatch(fetchSlides())
     }
   }
@@ -24,5 +28,19 @@ function setSlides(slides){
   return {
     type: types.SETSLIDES,
     slides
+  }
+}
+
+function setFileHash(hash){
+  return {
+    type: types.SETFILEHASH,
+    hash
+  }
+}
+
+export function setFileId(id){
+  return {
+    type: types.SETFILEID,
+    id
   }
 }

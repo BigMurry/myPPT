@@ -9,36 +9,34 @@ export default class Footer extends Component{
   render(){
     const {footer} = this.props
     return(
-      <div style={styles.outer}>
-        <footer style={styles.container}>
-          <div style={styles.item}>
-            {footer.company}
-          </div>
-          <div style={styles.item}>
-            {footer.reversion}
-          </div>
-        </footer>
-      </div>
+      <footer style={styles.container}>
+        <div style={styles.item}>
+          {footer.company}
+        </div>
+        <div style={styles.item}>
+          {footer.revision}
+        </div>
+      </footer>
     )
   }
 }
 
 const styles = {
-  outer:{
-    flex:1
-  },
   container:{
     flexDirection:'column',
-    height:30
+    backgroundColor:'rgb(91, 163, 230)',
+    borderRadius:'0 0 5px 5px',
+    textAlign: 'right'
   },
   item:{
-    flex:1
+    display: 'inline-block',
+    marginLeft:50
   }
 }
 
 Footer.propTypes = {
   footer: PropTypes.shape({
-    company: PropTypes.string.isRequired,
-    reversion: PropTypes.string.isRequired
+    company: PropTypes.string,
+    reversion: PropTypes.string
   }).isRequired
 }

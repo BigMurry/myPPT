@@ -19,7 +19,8 @@ export default class Title extends Component{
 const styles={
   title:{
     fontWeight: 600,
-    fontColor:'rgb(44, 250, 10)'
+    color:'rgb(70, 13, 212)',
+    textAlign: 'center'
   }
 }
 Title.propTypes = {

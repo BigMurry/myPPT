@@ -14,11 +14,16 @@ class App extends Component{
     super(props)
   }
 
-  componentWillMount(){
-    const {dispatch, slides} = this.props
-    dispatch(fetchSlidesIfNeeded(slides))
+  componentWillUpdate(){
+    const {dispatch} = this.props
+    dispatch(fetchSlidesIfNeeded())
   }
 
+  componentWillMount(){
+    const {dispatch} = this.props
+    dispatch(fetchSlidesIfNeeded())
+  }
+  
   render(){
     const {header, footer, author, slides, step, dispatch} = this.props
     return (
