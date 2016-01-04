@@ -20,6 +20,7 @@ export default class Main extends Component{
           <div style={styles.headerTitle}>
             {header.title}
           </div>
+          <p>Good</p>
           <div style={styles.subTitle}>
             {header.subtitle}
           </div>
