@@ -2,8 +2,10 @@ import React from 'react'
 import Title from '../components/Title'
 import Content from '../components/Content'
 import Button from '../components/Button'
+import classnames from 'classnames'
 
-import{forward, backward} from '../actions/navigator'
+import {forward, backward} from '../actions/navigator'
+import {setup} from '../actions/progress'
 
 let {
   Component,
@@ -18,14 +20,23 @@ export default class Main extends Component{
     //this._handleNext = this._handleNext.bind(this)
   }
 
+  componentWillUpdate(props, state){
+    const {dispatch} = this.props
+    dispatch(setup())
+  }
+
   _handlePre(){
-    const{dispatch} = this.props
-    dispatch(backward())
+    const{dispatch, progress} = this.props
+    if(!progress.begin){
+      dispatch(backward())
+    }
   }
 
   _handleNext(){
-    const{dispatch} = this.props
-    dispatch(forward())
+    const{dispatch, progress} = this.props
+    if(!progress.end){
+      dispatch(forward())
+    }
   }
 
   _renderSlide(){
@@ -56,12 +67,23 @@ export default class Main extends Component{
     }
   }
   render(){
+    const {progress}=this.props
     return (
       <div style={styles.outer}>
         {this._renderSlide()}
         <div style={styles.actions}>
-          <button style={styles.button} onClick={this._handlePre.bind(this)}>prev</button>
-          <button style={styles.button} onClick={this._handleNext.bind(this)}>next</button>
+          <button
+            className={classnames('btn',{disabled: progress.begin})}
+            style={styles.button}
+            disabled={progress.begin}
+            onClick={this._handlePre.bind(this)}
+          >prev</button>
+          <button
+            className={classnames('btn', {disabled: progress.end})}
+            style={styles.button}
+            disabled={progress.end}
+            onClick={this._handleNext.bind(this)}
+          >next</button>
         </div>
       </div>
     )
@@ -70,7 +92,7 @@ export default class Main extends Component{
 
 const styles = {
   outer:{
-    height: 300,
+    height: 500,
     backgroundColor:'rgb(0, 0, 0)',
     color:'rgb(254, 161, 4)',
     position:'relative'

@@ -1,5 +1,4 @@
 import * as types from '../constants/ActionTypes'
-import slidesUrl from '../resources/slides.json'
 
 export function forward(step=1){
   return {

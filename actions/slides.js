@@ -1,6 +1,7 @@
 import * as types from '../constants/ActionTypes'
 import slidesUrl from '../resources/slides.json'
 import path from 'path'
+import {setup} from '../actions/progress'
 
 export function fetchSlidesIfNeeded(){
   return (dispatch, getState) => {
@@ -17,7 +18,10 @@ function fetchSlides(){
   return (dispatch) => {
     fetch(slidesUrl)
     .then(response => response.json())
-    .then(json => dispatch(setSlides(json)))
+    .then(json => {
+      dispatch(setSlides(json))
+      dispatch(setup())
+    })
     .catch(error => {
       console.log(error)
     })

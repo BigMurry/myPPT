@@ -23,13 +23,13 @@ class App extends Component{
     const {dispatch} = this.props
     dispatch(fetchSlidesIfNeeded())
   }
-  
+
   render(){
-    const {header, footer, author, slides, step, dispatch} = this.props
+    const {header, footer} = this.props
     return (
       <div className="container">
         <Header header={header}/>
-        <Main slides={slides} header={header} author={author} step={step} dispatch={dispatch}/>
+        <Main {...this.props} />
         <Footer footer={footer} />
       </div>
     )
@@ -42,7 +42,8 @@ function mapStateToProps(state){
     header: state.slides.header,
     footer: state.slides.footer,
     author: state.slides.author,
-    step: state.navigator.currentStep
+    step: state.navigator.currentStep,
+    progress: state.progress
   }
 }
 
