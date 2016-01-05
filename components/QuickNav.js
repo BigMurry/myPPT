@@ -8,25 +8,20 @@ let{
 
 export default class QuickNav extends Component{
   render(){
-    const {slides, step, ...other} = this.props
+    const {slides, step} = this.props
     return (
-      <div style={styles.outer}>
-        <div style={styles.container}>
-          {slides.map((slide, idx) =>
-            <NavItem key={idx} slide={slide} active={idx===step} {...other}/>
-          )}
-        </div>
+      <div style={styles.container}>
+        <NavItem idx={0} slide={{title:'Home', content:'Return to home.'}} {...this.props}/>
+        {slides.map((slide, idx) =>
+          <NavItem key={idx} idx={idx+1} slide={slide} {...this.props}/>
+        )}
       </div>
     )
   }
 }
 
 const styles = {
-  outer:{
-    flex:1
-  },
   container:{
-    flexDirection:'column'
   }
 }
 

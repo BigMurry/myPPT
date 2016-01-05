@@ -22,7 +22,7 @@ const styles={
     fontSize:'2em',
     color:'rgb(143, 208, 153)',
     padding:'20 0 20 10',
-    border:'1px rgb(159, 200, 214) solid'
+    borderBottom:'1px rgb(159, 200, 214) solid'
   }
 }
 Title.propTypes = {

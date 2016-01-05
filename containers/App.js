@@ -43,6 +43,7 @@ function mapStateToProps(state){
     footer: state.slides.footer,
     author: state.slides.author,
     step: state.navigator.currentStep,
+    navShow: state.navigator.navShow,
     progress: state.progress
   }
 }

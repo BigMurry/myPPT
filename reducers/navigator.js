@@ -1,7 +1,8 @@
 import * as types from '../constants/ActionTypes'
 
 const initialState = {
-  currentStep:0
+  currentStep:0,
+  navShow: false
 }
 
 export default function navigator(state=initialState, action){
@@ -18,6 +19,10 @@ export default function navigator(state=initialState, action){
     case types.GOTO:
       step = action.step >=0 ? action.step : 0
       return Object.assign({}, state, {currentStep: step})
+    case types.OPENNAV:
+      return Object.assign({}, state, {navShow: true})
+    case types.CLOSENAV:
+      return Object.assign({}, state, {navShow: false})
     default:
       return state
   }

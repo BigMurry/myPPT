@@ -2,9 +2,14 @@ import React from 'react'
 import Title from '../components/Title'
 import Content from '../components/Content'
 import Button from '../components/Button'
+import QuickNav from '../components/QuickNav'
 import classnames from 'classnames'
+import FaBars from 'react-icons/lib/fa/bars'
+import TiArrowLeftThick from 'react-icons/lib/ti/arrow-left-thick'
+import TiArrowRightThick from 'react-icons/lib/ti/arrow-right-thick'
+import Modal from 'react-modal'
 
-import {forward, backward} from '../actions/navigator'
+import {forward, backward, openNav, closeNav} from '../actions/navigator'
 import {setup} from '../actions/progress'
 
 let {
@@ -16,14 +21,17 @@ export default class Main extends Component{
   constructor(props){
     super(props)
     this._renderSlide = this._renderSlide.bind(this)
+    this._openQuickNav = this._openQuickNav.bind(this)
+    this._closeQuickNav = this._closeQuickNav.bind(this)
+
     //this._handlePre = this._handlePre.bind(this)
     //this._handleNext = this._handleNext.bind(this)
   }
 
-  componentWillUpdate(props, state){
-    const {dispatch} = this.props
-    dispatch(setup())
-  }
+//  componentWillUpdate(props, state){
+//    const {dispatch} = this.props
+//    dispatch(setup())
+//  }
 
   _handlePre(){
     const{dispatch, progress} = this.props
@@ -32,6 +40,14 @@ export default class Main extends Component{
     }
   }
 
+  _openQuickNav(){
+    const {dispatch} = this.props
+    dispatch(openNav())
+  }
+  _closeQuickNav(){
+    const {dispatch} = this.props
+    dispatch(closeNav())
+  }
   _handleNext(){
     const{dispatch, progress} = this.props
     if(!progress.end){
@@ -66,24 +82,34 @@ export default class Main extends Component{
       )
     }
   }
+
   render(){
-    const {progress}=this.props
+    const {progress, navShow, slides, step, dispatch}=this.props
     return (
       <div style={styles.outer}>
+        <Modal
+          style={styles.modal}
+          isOpen = {navShow}
+          onRequestClose = {this._closeQuickNav}
+        >
+          <QuickNav slides={slides} step={step} dispatch={dispatch}/>
+        </Modal>
         {this._renderSlide()}
         <div style={styles.actions}>
+          <Button onClick={this._openQuickNav}>
+            nav
+            <FaBars className={'icon'}/>
+          </Button>
           <button
             className={classnames('btn',{disabled: progress.begin})}
-            style={styles.button}
             disabled={progress.begin}
             onClick={this._handlePre.bind(this)}
-          >prev</button>
+          >prev<TiArrowLeftThick className={'icon'}/></button>
           <button
             className={classnames('btn', {disabled: progress.end})}
-            style={styles.button}
             disabled={progress.end}
             onClick={this._handleNext.bind(this)}
-          >next</button>
+          >next<TiArrowRightThick className={'icon'}/></button>
         </div>
       </div>
     )
@@ -123,8 +149,21 @@ const styles = {
   },
   author:{
     marginTop:50,
-    color:'rgb(46, 37, 62)'
+    color:'rgb(119, 104, 144)'
   },
+  modal:{
+    overlay:{
+      backgroundColor:'transparent'
+    },
+    content:{
+      top: '55px',
+      left:'15px',
+      right: '10%',
+      bottom: '30%',
+      marginRight: '60%',
+      background:'rgba(88, 85, 73, 0.81)'
+    }
+  }
 }
 
 Main.propTypes = {

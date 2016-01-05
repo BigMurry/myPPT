@@ -8,7 +8,7 @@ export function setup(){
     }else{
       dispatch(startProject(false))
     }
-    if(navigator.currentStep === slides.length){
+    if(navigator.currentStep === slides.slides.length){
       dispatch(endProject(true))
     }else{
       dispatch(endProject(false))

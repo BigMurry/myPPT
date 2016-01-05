@@ -1,4 +1,5 @@
 import React from 'react'
+import classnames from 'classnames'
 
 let{
   Component,
@@ -11,9 +12,9 @@ export default class Button extends Component{
   }
 
   render(){
-    const {children, onClick} = this.props
+    const {children, onClick, disabled} = this.props
     return(
-      <button style={styles.button} onClick={onClick}>{children}</button>
+      <button className={classnames('btn', {'disabled': disabled})} disabled={disabled} onClick={onClick}>{children}</button>
     )
   }
 }
