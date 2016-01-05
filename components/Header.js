@@ -25,6 +25,11 @@ const styles = {
     borderTopLeftRadius:10,
     borderTopRightRadius:10,
     backgroundColor:'rgb(196, 181, 184)',
+    height:50,
+    position:'fixed',
+    top:0,
+    left:0,
+    right:0,
   },
   item:{
     marginLeft:20

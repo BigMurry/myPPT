@@ -25,8 +25,12 @@ const styles = {
   container:{
     flexDirection:'column',
     backgroundColor:'rgb(91, 163, 230)',
-    borderRadius:'0 0 5px 5px',
-    textAlign: 'right'
+    borderRadius:'0 0 10px 10px',
+    textAlign: 'right',
+    position:'fixed',
+    bottom:0,
+    right:0,
+    left:0,
   },
   item:{
     display: 'inline-block',

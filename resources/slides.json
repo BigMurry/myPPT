@@ -15,7 +15,7 @@
   "slides":[
     {
       "title":"Outlines",
-      "content":"## What is Nodejs\n ## Environment Elements\n ### Reactjs\n ### Redux\n ## Coding with pleasure\n"
+      "content":"## What is Nodejs\n ## Environment Elements\n ### Reactjs\n ### Redux\n ## Coding with pleasure\n ### something wrong."
     },{
       "title":"Rocks",
       "content":"## npm init,\n ## and so what ...\n ## Let's rock!\n # Can't be more funny!!!"
@@ -24,6 +24,9 @@
       "content":"# Let's Rock!"
     },{
       "title":"Code Demo",
+      "content":"`function foo(){\n\tthis.one();\n}`"
+    },{
+      "title":"Code Demo2",
       "content":"`function foo(){\n\tthis.one();\n}`"
     }
   ]

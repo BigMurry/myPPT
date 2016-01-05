@@ -118,10 +118,8 @@ export default class Main extends Component{
 
 const styles = {
   outer:{
-    height: 500,
-    backgroundColor:'rgb(0, 0, 0)',
     color:'rgb(254, 161, 4)',
-    position:'relative'
+    margin:'40px 0 0 0',
   },
   button:{
     borderRadius: 20,
@@ -133,8 +131,8 @@ const styles = {
   },
   actions:{
     position:'absolute',
-    bottom:0,
-    margin:'10'
+    bottom:30,
+    left:20,
   },
   frontContainer:{
     paddingTop:20,
