@@ -26,8 +26,8 @@
       "title":"Code Demo",
       "content":"`function foo(){\n\tthis.one();\n}`"
     },{
-      "title":"Code Demo2",
-      "content":"`function foo(){\n\tthis.one();\n}`"
+      "title":"Elements",
+      "content":"## `process` global, just like `window` in browser"
     }
   ]
 }

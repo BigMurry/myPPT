@@ -27,14 +27,6 @@ export default class Main extends Component{
     //this._handleNext = this._handleNext.bind(this)
   }
 
-//  componentWillUpdate(props, state){
-//    const {dispatch} = this.props
-//    dispatch(setup())
-//  }
-  componentDidMount(){
-    const {dispatch} = this.props
-  }
-
   _handlePre(){
     const{dispatch, progress} = this.props
     if(!progress.begin){
