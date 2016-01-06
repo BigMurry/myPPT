@@ -4,6 +4,7 @@ import Header from '../components/Header'
 import Footer from '../components/Footer'
 import {connect} from 'react-redux'
 import {fetchSlidesIfNeeded} from '../actions/slides'
+import {forward, backward, openNav, closeNav} from '../actions/navigator'
 
 let{
   Component
@@ -12,6 +13,33 @@ let{
 class App extends Component{
   constructor(props){
     super(props)
+    this._handleKeyDown = this._handleKeyDown.bind(this)
+  }
+
+  _handleKeyDown(e){
+    const {dispatch, progress, navShow} = this.props
+    switch(e.keyCode){
+      case 72://H
+      case 37://arrow left
+        if(!progress.begin){
+          dispatch(backward())
+        }
+        break;
+      case 76://L
+      case 39://arrow right
+      case 32://space
+        if(!progress.end){
+          dispatch(forward())
+        }
+        break;
+      case 77://M
+        if(!navShow){
+          dispatch(openNav())
+        }else{
+          dispatch(closeNav())
+        }
+      break;
+    }
   }
 
   componentWillUpdate(){
@@ -22,6 +50,14 @@ class App extends Component{
   componentWillMount(){
     const {dispatch} = this.props
     dispatch(fetchSlidesIfNeeded())
+  }
+
+  componentDidMount(){
+    document.addEventListener("keydown", this._handleKeyDown, false);
+  }
+
+  componentWillUnmount(){
+    document.removeEventListener("keydown", this._handleKeyDown, false);
   }
 
   render(){

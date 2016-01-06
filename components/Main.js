@@ -23,7 +23,6 @@ export default class Main extends Component{
     this._renderSlide = this._renderSlide.bind(this)
     this._openQuickNav = this._openQuickNav.bind(this)
     this._closeQuickNav = this._closeQuickNav.bind(this)
-
     //this._handlePre = this._handlePre.bind(this)
     //this._handleNext = this._handleNext.bind(this)
   }
@@ -32,6 +31,9 @@ export default class Main extends Component{
 //    const {dispatch} = this.props
 //    dispatch(setup())
 //  }
+  componentDidMount(){
+    const {dispatch} = this.props
+  }
 
   _handlePre(){
     const{dispatch, progress} = this.props
@@ -154,10 +156,10 @@ const styles = {
       backgroundColor:'transparent'
     },
     content:{
-      top: '55px',
+      top: '140px',
       left:'15px',
       right: '10%',
-      bottom: '30%',
+      bottom: '100px',
       marginRight: '60%',
       background:'rgba(88, 85, 73, 0.81)'
     }
