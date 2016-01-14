@@ -1,0 +1,33 @@
+{
+  "header":{
+    "title":"Coding under Nodejs",
+    "subtitle":"A introduction to the Nodejs coding environment"
+  },
+  "author":{
+    "name":"Murry.Diao",
+    "email":"murry.diao@avepoint.com",
+    "location":"Shanghai"
+  },
+  "footer":{
+    "company":"Avepoint Shanghai Office",
+    "revision":"2015/4/1"
+  },
+  "slides":[
+    {
+      "title":"Outlines",
+      "content":"## What is Nodejs\n ## Nodejs cando\n ## Development under Nodejs\n ## Live Demo"
+    },{
+      "title":"What is Nodejs",
+      "content":"## js runtime environment\n ## NOT a lib or framework"
+    },{
+      "title":"Nodejs cando good",
+      "content":"# run js\n ## write test code\n ## create Server\n ## ..."
+    },{
+      "title":"Development under Nodejs",
+      "content":"# Tools\n ## npm\n ## Github\n # Development\n ## control everything (including building)"
+    },{
+      "title":"Live Demo",
+      "content":"## Node script\n ## Node development procedure"
+    }
+  ]
+}
