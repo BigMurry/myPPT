@@ -3,8 +3,9 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node server.js"
+    "start": "node server/server.js"
   },
+  "main": "client/client.html",
   "dependencies": {
     "babel-core": "^6.3.26",
     "babel-polyfill": "^6.3.14",
@@ -12,12 +13,14 @@
     "babelify": "^7.2.0",
     "classnames": "^2.2.2",
     "express": "^4.13.3",
+    "history": "^1.17.0",
     "marked": "^0.3.5",
     "react": "^0.14.3",
     "react-dom": "^0.14.3",
     "react-icons": "^1.0.3",
     "react-modal": "^0.6.1",
     "react-redux": "^4.0.6",
+    "react-router": "^1.0.3",
     "redux": "^3.0.5",
     "redux-thunk": "^1.0.3"
   },
