@@ -15,19 +15,19 @@
   "slides":[
     {
       "title":"Outlines",
-      "content":"## What is Nodejs\n ## Environment Elements\n ### Reactjs\n ### Redux\n ## Coding with pleasure\n ### something wrong."
-    },{
-      "title":"Rocks",
-      "content":"## npm init,\n ## and so what ...\n ## Let's rock!\n # Can't be more funny!!!"
+      "content":"## What is Nodejs\n ## Nodejs cando\n ## Development under Nodejs\n ## Live Demo"
     },{
       "title":"What is Nodejs",
-      "content":"# Let's Rock!"
+      "content":"## js runtime environment\n ## NOT a lib or framework"
     },{
-      "title":"Code Demo",
-      "content":"`function foo(){\n\tthis.one();\n}`"
+      "title":"Nodejs cando good",
+      "content":"# run js\n ## write test code\n ## create Server\n ## ..."
     },{
-      "title":"Elements",
-      "content":"## `process` global, just like `window` in browser"
+      "title":"Development under Nodejs",
+      "content":"# Tools\n ## npm\n ## Github\n # Development\n ## control everything (including building)"
+    },{
+      "title":"Live Demo",
+      "content":"## Node script\n ## Node development procedure"
     }
   ]
 }

@@ -26,7 +26,7 @@ export default class Content extends Component{
 
 const styles = {
   container:{
-    margin:10
+    marginLeft:80
   }
 }
 
