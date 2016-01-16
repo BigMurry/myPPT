@@ -12,21 +12,17 @@ export default class Button extends Component{
   }
 
   render(){
-    const {children, onClick, disabled} = this.props
+    const {children, onClick, disabled, ...rest} = this.props
     return(
-      <button className={classnames('btn', {'disabled': disabled})} disabled={disabled} onClick={onClick}>{children}</button>
+      <button
+        className={classnames('btn', {'disabled': disabled})}
+        disabled={disabled}
+        onClick={onClick}
+        {...rest}
+      >
+        {children}
+      </button>
     )
-  }
-}
-
-const styles = {
-  button:{
-    borderRadius: 20,
-    border:0,
-    marginRight:15,
-    fontSize:25,
-    backgroundColor:'rgb(33, 236, 8)',
-    cursor:'pointer'
   }
 }
 
