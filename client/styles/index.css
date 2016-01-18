@@ -1,5 +1,6 @@
 .layout{
-  
+  width:1024;
+  margin:auto;
 }
 #root{
   position:fixed;

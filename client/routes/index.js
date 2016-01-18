@@ -1,6 +1,5 @@
 import React from 'react'
 import {Route, IndexRoute} from 'react-router'
-
 import MainLayout from '../layouts/MainLayout'
 import Index from '../containers/Index'
 import Upload from '../containers/Upload'

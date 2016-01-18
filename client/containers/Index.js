@@ -28,7 +28,7 @@ export default class Index extends Component{
   render(){
     return (
       <div style={styles.container}>
-        <SearchBox submitAction={this._onSearch}/>
+        <SearchBox  submitAction={this._onSearch}/>
         <div style={styles.funcArea}>
           <div style={styles.actionContainer}>
             <Link to={'edit'}>Create a PPT</Link>

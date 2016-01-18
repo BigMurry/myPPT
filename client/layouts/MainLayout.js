@@ -12,7 +12,8 @@ export default function MainLayout(props){
 
 const styles = {
   layoutTitle:{
-    fontSize:40
+    fontSize:40,
+    color:'rgb(147, 152, 124)'
   }
 }
 
