@@ -11,14 +11,19 @@ export default class Button extends Component{
     super(props)
   }
 
+  static defaultProps = {
+    type: 'button',
+    disabled: false
+  }
+
   render(){
-    const {children, onClick, disabled, ...rest} = this.props
+    const {children, onClick, disabled, type} = this.props
     return(
       <button
         className={classnames('btn', {'disabled': disabled})}
         disabled={disabled}
         onClick={onClick}
-        {...rest}
+        type={type}
       >
         {children}
       </button>
@@ -27,5 +32,6 @@ export default class Button extends Component{
 }
 
 Button.propTypes = {
-  onClick: PropTypes.func
+  onClick: PropTypes.func,
+  children: PropTypes.element.isRequired
 }

@@ -1,5 +1,5 @@
 import React from 'react'
-import {Route} from 'react-router'
+import {Route, IndexRoute} from 'react-router'
 
 import MainLayout from '../layouts/MainLayout'
 import Index from '../containers/Index'
@@ -15,11 +15,11 @@ const {
 
 export default (
   <Route path="/" component={MainLayout}>
-    <IndexRoute component={{content: Index}}/>
-    <Route path="upload" component={{content: Upload}}/>
-    <Route path="edit" component={{content: Edit}}/>
-    <Route path="project" component={{content: Project}}/>
-    <Route path="search" component={{content: Search}}/>
-    <Route path="help" component={{content: Help}}/>
+    <IndexRoute components={{content: Index}}/>
+    <Route path="upload" components={{content: Upload}}/>
+    <Route path="edit" components={{content: Edit}}/>
+    <Route path="project" components={{content: Project}}/>
+    <Route path="search" components={{content: Search}}/>
+    <Route path="help" components={{content: Help}}/>
   </Route>
 )
