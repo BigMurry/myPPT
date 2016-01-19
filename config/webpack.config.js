@@ -27,7 +27,12 @@ module.exports = {
       },{
         test: /\.scss$/,
         loaders:['style', 'css', 'sass'],
-        include:path.join(__dirname,'../client')
+        include:path.join(__dirname,'../client/styles')
+      },{
+        test:/\.scss$/,
+        loaders:['style', 'css?module=local', 'sass'],
+        include:path.join(__dirname, '../client'),
+        exclude:path.join(__dirname, '../client/styles')
       },{
         test:/\.json$/,
         loaders:['file'],

@@ -35,16 +35,16 @@ export default class Index extends Component{
         <div style={styles.funcArea}>
           <div style={styles.actionContainer}>
             <TiEdit style={styles.actionIcon} className={'icon'}/>
-            <Link to={'edit'}>Create a PPT</Link>
+            <Link style={styles.link} to={'edit'}>Create a PPT</Link>
           </div>
           <div style={styles.actionContainer}>
             <TiDeviceDesktop style={styles.actionIcon} className={'icon'}/>
-            <Link to={'project'}>Start a Project</Link>
+            <Link style={styles.link} to={'project'}>Start a Project</Link>
           </div>
           <div style={Object.assign({},styles.actionContainer,styles.uploadArea)}>
             <Dropzone onDrop={this._onDrop}>
               <TiUpload style={styles.actionIcon} className={'icon'}/>
-              <div>Drop your files here, or click to select files to upload</div>
+              <div style={styles.link}>Drop local files</div>
             </Dropzone>
           </div>
         </div>
@@ -66,7 +66,9 @@ const styles = {
   actionIcon:{
     fontSize:100,
     display:'block',
-    margin:'auto'
+    marginLeft:'auto',
+    marginRight:'auto',
+    marginTop:'30px',
   },
   actionContainer:{
     width:200,
@@ -80,5 +82,12 @@ const styles = {
   },
   uploadArea:{
     border:'none'
+  },
+  link:{
+    textDecoration:'none',
+    fontSize:20,
+    color:'rgb(226, 182, 27)',
+    display:'block',
+    margin:'20px 25px 0 30px',
   }
 }

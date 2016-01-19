@@ -13,17 +13,18 @@ export default class Button extends Component{
 
   static defaultProps = {
     type: 'button',
-    disabled: false
+    disabled: false,
   }
 
   render(){
-    const {children, onClick, disabled, type} = this.props
+    const {children, onClick, disabled, type, style} = this.props
     return(
       <button
         className={classnames('btn', {'disabled': disabled})}
         disabled={disabled}
         onClick={onClick}
         type={type}
+        style={style}
       >
         {children}
       </button>
