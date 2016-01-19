@@ -17,10 +17,10 @@ export default class Button extends Component{
   }
 
   render(){
-    const {children, onClick, disabled, type, style} = this.props
+    const {children, onClick, disabled, type, style, className} = this.props
     return(
       <button
-        className={classnames('btn', {'disabled': disabled})}
+        className={classnames('btn', {'disabled': disabled}, className)}
         disabled={disabled}
         onClick={onClick}
         type={type}
