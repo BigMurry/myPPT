@@ -14,6 +14,11 @@ const styles = {
   layoutTitle:{
     fontSize:40,
     color:'rgb(147, 152, 124)'
+  },
+  layoutFoot:{
+    position:'fixed',
+    bottom:20,
+    color:'rgb(185, 194, 235)'
   }
 }
 

@@ -25,8 +25,8 @@ module.exports = {
         exclude:/node_modules/,
         loaders:['babel']
       },{
-        test: /\.css$/,
-        loaders:['style', 'raw'],
+        test: /\.scss$/,
+        loaders:['style', 'css', 'sass'],
         include:path.join(__dirname,'../client')
       },{
         test:/\.json$/,

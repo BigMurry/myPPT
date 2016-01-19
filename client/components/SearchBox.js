@@ -10,21 +10,22 @@ let {
 export default class SearchBox extends Component{
 
   static propTypes = {
-    submitAction: PropTypes.func.isRequired,
+    submitAction: PropTypes.string.isRequired,
+    onSubmit:PropTypes.func,
     placeHolder: PropTypes.string.isRequired
   }
 
   static defaultProps = {
-    placeHolder: 'Search to find the available ppt',
+    placeHolder: 'Search the available ppt',
     style:{},
     className:'search-box'
   }
 
   render(){
-    let {submitAction, placeHolder, style, className} = this.props
+    let {submitAction, onSubmit, placeHolder, style, className} = this.props
     return (
-      <form className={className} style={style} onSubmit={submitAction}>
-        <input placeholder={placeHolder} name='key'/>
+      <form className={className} style={style} action={submitAction} onSubmit={onSubmit}>
+        <input style={styles.input} placeholder={placeHolder} name='key'/>
         <Button type={'submit'}>
           {/* NOTE: add icon here */}
           <TiZoom className={'icon'} />
@@ -32,5 +33,13 @@ export default class SearchBox extends Component{
         </Button>
       </form>
     )
+  }
+}
+
+const styles = {
+  input:{
+    fontSize:30,
+    marginRight:20,
+    borderRadius:10
   }
 }

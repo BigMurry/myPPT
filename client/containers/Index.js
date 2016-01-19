@@ -2,6 +2,9 @@ import React from 'react'
 import {Link} from 'react-router'
 import Dropzone from 'react-dropzone'
 import SearchBox from '../components/SearchBox'
+import TiEdit from 'react-icons/lib/ti/edit'
+import TiDeviceDesktop from 'react-icons/lib/ti/device-desktop'
+import TiUpload from 'react-icons/lib/ti/upload'
 
 let {
   Component,
@@ -28,16 +31,19 @@ export default class Index extends Component{
   render(){
     return (
       <div style={styles.container}>
-        <SearchBox  submitAction={this._onSearch}/>
+        <SearchBox style={styles.searchBox}  submitAction={'/search'} onSubmit={this._onSearch}/>
         <div style={styles.funcArea}>
           <div style={styles.actionContainer}>
+            <TiEdit style={styles.actionIcon} className={'icon'}/>
             <Link to={'edit'}>Create a PPT</Link>
           </div>
           <div style={styles.actionContainer}>
+            <TiDeviceDesktop style={styles.actionIcon} className={'icon'}/>
             <Link to={'project'}>Start a Project</Link>
           </div>
-          <div style={styles.uploadArea}>
+          <div style={Object.assign({},styles.actionContainer,styles.uploadArea)}>
             <Dropzone onDrop={this._onDrop}>
+              <TiUpload style={styles.actionIcon} className={'icon'}/>
               <div>Drop your files here, or click to select files to upload</div>
             </Dropzone>
           </div>
@@ -48,7 +54,31 @@ export default class Index extends Component{
 }
 
 const styles = {
-  container:{},
-  actionContainer:{},
-  uploadArea:{}
+  container:{
+    color:'rgb(226, 182, 27)',
+    overflow:'auto',
+    width:'100%'
+  },
+  searchBox:{
+    marginTop:50,
+    marginBottom:50,
+  },
+  actionIcon:{
+    fontSize:100,
+    display:'block',
+    margin:'auto'
+  },
+  actionContainer:{
+    width:200,
+    height:200,
+    borderRadius:10,
+    borderWidth:2,
+    borderColor:'rgb(184, 187, 8)',
+    borderStyle:'dashed',
+    float:'left',
+    margin:'0 20px 0 0'
+  },
+  uploadArea:{
+    border:'none'
+  }
 }

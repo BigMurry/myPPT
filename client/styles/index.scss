@@ -1,3 +1,9 @@
+@import "_normalize.scss";
+
+html,
+body {
+  height: 100%;
+}
 .layout{
   width:1024;
   margin:auto;
@@ -9,6 +15,9 @@
   left:0;
   right:0;
   background-color: rgb(0,0,0);
+}
+.content-container{
+  background-color: rgb(212, 190, 199);
 }
 .pad-style{
   padding:20 0 10 0;
@@ -29,22 +38,24 @@ h4{
   font-size:25px;
   background-color:rgb(33, 236, 8);
   cursor:pointer;
+  color:rgb(0, 0, 0);
+  &.disabled{
+    background-color: rgb(54, 64, 66);
+    color:rgb(138, 152, 144);
+  }
 }
 .icon{
   margin-left:10px;
   margin-right:10px;
 }
-.btn.disabled{
-  background-color: rgb(54, 64, 66);
-}
 .nav-item{
-  color:rgb(129, 237, 34)
-}
-.nav-item.active{
-  background-color:rgb(147, 153, 228);
-  color:rgb(32, 46, 45);
-}
-.nav-item:hover{
-  background-color:rgb(208, 191, 215);
-  color:rgb(34, 36, 30);
+  color:rgb(129, 237, 34);
+  &.active{
+    background-color:rgb(147, 153, 228);
+    color:rgb(32, 46, 45);
+  }
+  &:hover{
+    background-color:rgb(208, 191, 215);
+    color:rgb(34, 36, 30);
+  }
 }
