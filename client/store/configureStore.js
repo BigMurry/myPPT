@@ -2,7 +2,7 @@ import {createStore, applyMiddleware} from 'redux'
 import thunk from 'redux-thunk'
 import createBrowserHistory from 'history/lib/createBrowserHistory'
 import {syncHistory} from 'redux-simple-router'
-import rootReducer from '../reducers/index'
+import rootReducer from '../reducers'
 
 let history = createBrowserHistory()
 const simpleRouterMiddleware = syncHistory(history)
