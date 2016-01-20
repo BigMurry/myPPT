@@ -16,7 +16,7 @@ class Edit extends Component{
     this._onAdd = this._onAdd.bind(this)
   }
 
-  static function transToString(obj){
+  static transToString(obj){
     let ret = ''
     for(let key in obj){
       if(obj.hasOwnProperty(key)){

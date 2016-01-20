@@ -1,5 +1,5 @@
-import * as types from '../constants/ActionTypes'
-import {setup} from '../actions/progress'
+import * as types from '../../constants/ActionTypes'
+import {setup} from './progress'
 
 export function forward(step = 1){
   return (dispatch, getState) => {

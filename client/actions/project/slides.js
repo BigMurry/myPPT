@@ -1,13 +1,13 @@
-import * as types from '../constants/ActionTypes'
-import slidesUrl from '../resources/slides.json'
+import * as types from '../../constants/ActionTypes'
+import slidesUrl from '../../resources/slides.json'
 import path from 'path'
-import {setup} from '../actions/progress'
+import {setup} from './progress'
 
 export function fetchSlidesIfNeeded(){
   return (dispatch, getState) => {
     let state = getState()
     let newId = path.basename(slidesUrl, '.json')
-    if(state.slides.id !== newId){
+    if(state.project.slides.id !== newId){
       dispatch(setFileId(newId))
       dispatch(fetchSlides())
     }

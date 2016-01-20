@@ -3,12 +3,22 @@ import Main from '../components/Main'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import {connect} from 'react-redux'
-import {fetchSlidesIfNeeded} from '../actions/slides'
-import {forward, backward, openNav, closeNav} from '../actions/navigator'
+import {slides, navigator} from '../actions/project'
 
 let{
   Component
 } = React
+
+let {
+  fetchSlidesIfNeeded
+} = slides
+
+let {
+  forward,
+  backward,
+  openNav,
+  closeNav
+} = navigator
 
 class Project extends Component{
   constructor(props){
@@ -73,14 +83,15 @@ class Project extends Component{
 }
 
 function mapStateToProps(state){
+  let s = state.project
   return {
-    slides: state.slides.slides,
-    header: state.slides.header,
-    footer: state.slides.footer,
-    author: state.slides.author,
-    step: state.navigator.currentStep,
-    navShow: state.navigator.navShow,
-    progress: state.progress
+    slides: s.slides.slides,
+    header: s.slides.header,
+    footer: s.slides.footer,
+    author: s.slides.author,
+    step: s.navigator.currentStep,
+    navShow: s.navigator.navShow,
+    progress: s.progress
   }
 }
 

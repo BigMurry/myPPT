@@ -1,8 +1,8 @@
-import * as types from '../constants/ActionTypes'
+import * as types from '../../constants/ActionTypes'
 
 export function setup(){
   return (dispatch, getState) => {
-    const {navigator, slides} = getState()
+    const {navigator, slides} = getState().project
     if(navigator.currentStep === 0){
       dispatch(startProject(true))
     }else{

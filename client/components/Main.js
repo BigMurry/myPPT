@@ -9,13 +9,23 @@ import TiArrowLeftThick from 'react-icons/lib/ti/arrow-left-thick'
 import TiArrowRightThick from 'react-icons/lib/ti/arrow-right-thick'
 import Modal from 'react-modal'
 
-import {forward, backward, openNav, closeNav} from '../actions/navigator'
-import {setup} from '../actions/progress'
+import {navigator, progress} from '../actions/project'
 
 let {
   Component,
   PropTypes
 } = React
+
+let {
+  setup
+} = progress
+
+let {
+  forward,
+  backward,
+  openNav,
+  closeNav
+} = navigator
 
 export default class Main extends Component{
   constructor(props){

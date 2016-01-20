@@ -1,5 +1,5 @@
 import React from 'react'
-import {goto, closeNav} from '../actions/navigator'
+import {navigator} from '../actions/project'
 import FaLocationArrow from 'react-icons/lib/fa/location-arrow'
 import classnames from 'classnames'
 
@@ -7,6 +7,11 @@ let{
   Component,
   PropTypes
 } = React
+
+let {
+  goto,
+  closeNav
+} = navigator
 
 export default class NavItem extends Component{
   constructor(props){
