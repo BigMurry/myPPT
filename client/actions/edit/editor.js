@@ -17,3 +17,17 @@ export function openPreview(){
     type: ActionTypes.OPEN_PREVIEW
   }
 }
+
+export function changeGeneralInfo(generalInfo){
+  return {
+    type: ActionTypes.CHANGE_GENERAL_INFO,
+    generalInfo
+  }
+}
+
+export function changeSlidesContent(content){
+  return {
+    type: ActionTypes.CHANGE_SLIDES_CONTENT,
+    content
+  }
+}

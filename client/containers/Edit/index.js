@@ -14,13 +14,13 @@ const {
   addSlide,
   deleteSlide,
   openPreview,
+  changeGeneralInfo,
+  changeSlidesContent,
 } = editor
 
 const {
   saveGeneralInfo,
   saveSlidesInfo,
-  changeGeneralInfo,
-  changeSlidesContent
 } = storage
 
 const TIME_OUT = 2000
