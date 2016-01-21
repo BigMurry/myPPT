@@ -3,22 +3,31 @@ import * as ActionTypes from '../../constants/ActionTypes'
 const initialState = {
   editPosition: 0,
   generalInfo: {
-    "title":'',
-    "subTitle":'',
-    "author":'',
-    "company":'',
-    "email":'',
+    "id":'g1',
+    "title":'How to learn Nodejs',
+    "subTitle":'A foo ppt example',
+    "author":'murry.diao',
+    "company":'avepoint',
+    "email":'murry.diao@avepoint.com',
   },
+  generalInfoId:'',
+  slideInfoId:'',
   generalInfoStr:'',
   slideInfoStr:'',
-  slidesContent:[],
+  slidesContent:[
+    {
+      "id":'s1',
+      "head":'Outlines',
+      "content":'## what is nodejs\n ## how to use Nodejs\n'
+    }
+  ],
   previewShow: false,
 }
 
 function transToString(obj){
   let ret = ''
   for(let key in obj){
-    if(obj.hasOwnProperty(key)){
+    if(obj.hasOwnProperty(key) && key !== 'id'){
       ret +=`[${key}]${obj[key]}\n`
     }
   }
@@ -31,7 +40,9 @@ function transToObj(str){
   let match = reg.exec(str)
   while(match){
     let v = match[2].replace(/\n$/,'')
-    obj[match[1]] = v
+    if(match[1] !== 'id'){
+      obj[match[1]] = v
+    }
     match = reg.exec(str)
   }
   return obj
@@ -45,13 +56,23 @@ export default function editor(state = initialState, action){
       return {
         ...state,
         slidesContent: slides,
-        editPosition: state.editPostion + 1
+        editPosition: state.editPosition + 1
       }
     case ActionTypes.DELETE_SLIDE:
       slides.splice(state.editPosition, 1)
       return {
         ...state,
         slidesContent: slides
+      }
+    case ActionTypes.EDIT_PREVIOUS:
+      return {
+        ...state,
+        editPosition: state.editPosition - 1
+      }
+    case ActionTypes.EDIT_NEXT:
+      return {
+        ...state,
+        editPosition: state.editPosition + 1
       }
     case ActionTypes.OPEN_PREVIEW:
       return {
@@ -78,6 +99,16 @@ export default function editor(state = initialState, action){
       return {
         ...state,
         slidesContent: slides
+      }
+    case ActionTypes.RELOAD_GENERAL_INFO:
+      return {
+        ...state,
+        generalInfoStr: transToString(state.generalInfo)
+      }
+    case ActionTypes.RELOAD_SLIDE_INFO:
+      return {
+        ...state,
+        slideInfoStr: transToString(state.slidesContent[state.editPosition])
       }
     default:
       return state

@@ -1,6 +1,9 @@
 import React from 'react'
 import Button from '../../components/Button'
 import TiPlus from 'react-icons/lib/ti/plus'
+import TiTimes from 'react-icons/lib/ti/times'
+import TiArrowLeftThick from 'react-icons/lib/ti/arrow-left-thick'
+import TiArrowRightThick from 'react-icons/lib/ti/arrow-right-thick'
 import MdHourglassEmpty from 'react-icons/lib/md/hourglass-empty'
 import MdDone from 'react-icons/lib/md/done'
 import {connect} from 'react-redux'
@@ -18,6 +21,9 @@ const {
   openPreview,
   changeGeneralInfo,
   changeSlidesContent,
+  reloadIfNeeded,
+  editPrevious,
+  editNext,
 } = editor
 
 const {
@@ -28,19 +34,6 @@ const {
 const TIME_OUT = 2000
 
 class Edit extends Component{
-
-  static defaultProps = {
-    slidesCount:0,
-    editPosition:0,
-    generalInfo:{
-      "title":'',
-      "subTitle":'',
-      "author":'',
-      "company":'',
-      "email":'',
-    },
-    slidesContent:[]
-  }
 
   constructor(props){
     super(props)
@@ -58,6 +51,8 @@ class Edit extends Component{
     this._handleGeneralChange = this._handleGeneralChange.bind(this)
     this._handleSlidesChange = this._handleSlidesChange.bind(this)
     this._timmerHandle = this._timmerHandle.bind(this)
+    this._onPrevious = this._onPrevious.bind(this)
+    this._onNext = this._onNext.bind(this)
   }
 
   get savingGeneralInfoStatus(){
@@ -82,7 +77,9 @@ class Edit extends Component{
   }
 
   componentWillMount(){
+    const {dispatch} = this.props
     this.timmer = setInterval(this._timmerHandle, TIME_OUT)
+    dispatch(reloadIfNeeded())
   }
 
   componentWillUnmount(){
@@ -120,6 +117,16 @@ class Edit extends Component{
     dispatch(deleteSlide(idx))
   }
 
+  _onPrevious(){
+    const {dispatch} = this.props
+    dispatch(editPrevious())
+  }
+
+  _onNext(){
+    const {dispatch} = this.props
+    dispatch(editNext())
+  }
+
   _onCountClick(){
     const {dispatch} = this.props
     dispatch(openPreview())
@@ -152,6 +159,8 @@ class Edit extends Component{
       editPosition,
     } = this.props
 
+    const slidesCount = slidesContent.length
+
     return (
       <div className={'content-container'}>
         <div className={styles.editContainer}>
@@ -166,11 +175,20 @@ class Edit extends Component{
           </div>
           <div className={styles.displayBlock}>
             <Button onClick={this._onAdd}>
-              <TiPlus className={cn('icon', styles.addIcon)}/>
+              <TiPlus className={`icon ${styles.addIcon}`}/>
+            </Button>
+            <Button onClick={this._onDelete}>
+              <TiTimes className={`icon ${styles.addIcon}`}/>
+            </Button>
+            <Button onClick={this._onPrevious} disabled = {editPosition <= 0}>
+              <TiArrowLeftThick className={`icon ${styles.addIcon}`} />
+            </Button>
+            <Button onClick={this._onNext} disabled = {editPosition >= slidesCount - 1}>
+              <TiArrowRightThick className={`icon ${styles.addIcon}`}/>
             </Button>
             <Button className={styles.count}>
               <div className={`${styles.btnInner} ${styles.left}`}>{editPosition}</div>
-              <div className={`${styles.btnInner} ${styles.right}`}>{slidesContent.length}</div>
+              <div className={`${styles.btnInner} ${styles.right}`}>{slidesCount}</div>
             </Button>
           </div>
           <div className={styles.slidesBlock}>

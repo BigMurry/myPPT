@@ -1,4 +1,18 @@
 import * as ActionTypes from '../../constants/ActionTypes'
+import {saveSlidesInfo} from './storage'
+
+function goPrevious(){
+  return {
+    type: ActionTypes.EDIT_PREVIOUS
+  }
+}
+
+function goNext(){
+  return {
+    type: ActionTypes.EDIT_NEXT
+  }
+}
+
 
 export function addSlide(){
   return {
@@ -9,6 +23,46 @@ export function addSlide(){
 export function deleteSlide(){
   return {
     type: ActionTypes.DELETE_SLIDE
+  }
+}
+
+export function editPrevious(){
+  return (dispatch, getState) => {
+    dispatch(saveSlidesInfo())
+    dispatch(goPrevious())
+    dispatch(reloadSlideInfo())
+  }
+}
+
+export function editNext(){
+  return (dispatch, getState) => {
+    dispatch(saveSlidesInfo())
+    dispatch(goNext())
+    dispatch(reloadSlideInfo())
+  }
+}
+
+export function reloadIfNeeded(){
+  return (dispatch, getState) => {
+    let state = getState().edit.editor
+    if(state.generalInfoId !== state.generalInfo.id){
+      dispatch(reloadGeneralInfo())
+    }
+    if(state.slideInfoId !== state.slidesContent[state.editPosition].id){
+      dispatch(reloadSlideInfo())
+    }
+  }
+}
+
+export function reloadGeneralInfo(){
+  return {
+    type: ActionTypes.RELOAD_GENERAL_INFO
+  }
+}
+
+export function reloadSlideInfo(){
+  return {
+    type: ActionTypes.RELOAD_SLIDE_INFO
   }
 }
 
