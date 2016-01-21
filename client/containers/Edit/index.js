@@ -156,10 +156,10 @@ class Edit extends Component{
       <div className={'content-container'}>
         <div className={styles.editContainer}>
           <div className={styles.generalBlock}>
-            <p>General Information</p>
+            <p className={styles['block-title']}>General Information</p>
             <div className={styles.saveMsg}>{this.savingGeneralInfoStatus}</div>
             <textarea
-              className = {cn(styles.textArea, styles.generalEdit)}
+              className = {`${styles.textArea} ${styles.generalEdit}`}
               value = {generalInfoStr}
               onChange = {this._handleGeneralChange}
             />
@@ -169,15 +169,15 @@ class Edit extends Component{
               <TiPlus className={cn('icon', styles.addIcon)}/>
             </Button>
             <Button className={styles.count}>
-              <div className={cn(styles.btnInner, styles.left)}>{editPosition}</div>
-              <div className={cn(styles.btnInner, styles.right)}>{slidesContent.length}</div>
+              <div className={`${styles.btnInner} ${styles.left}`}>{editPosition}</div>
+              <div className={`${styles.btnInner} ${styles.right}`}>{slidesContent.length}</div>
             </Button>
           </div>
           <div className={styles.slidesBlock}>
-            <p>Slides Information</p>
+            <p className={styles['block-title']}>Slides Information</p>
             <div className={styles.saveMsg}>{this.savingSlideInfoStatus}</div>
             <textarea
-              className = {cn(styles.textArea,styles.slidesEdit)}
+              className = {`${styles.textArea} ${styles.slidesEdit}`}
               value = {slideInfoStr}
               onChange = {this._handleSlidesChange}
             />
