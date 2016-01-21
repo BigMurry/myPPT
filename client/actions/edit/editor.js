@@ -31,3 +31,15 @@ export function changeSlidesContent(content){
     content
   }
 }
+
+export function transformSlideInfo(){
+  return {
+    type: ActionTypes.TRANSFORM_SLIDE_INFO
+  }
+}
+
+export function transformGeneralInfo(){
+  return {
+    type: ActionTypes.TRANSFORM_GENERAL_INFO
+  }
+}

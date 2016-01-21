@@ -22,10 +22,26 @@
 }
 .textArea{
   width:100%;
-  .generalEdit{
+  &.generalEdit{
     height:150px;
   }
-  .slidesEdit{
+  &.slidesEdit{
     height:350px;
+  }
+}
+.saveMsg{
+  float:right;
+  color:rgb(55, 148, 53);
+}
+.btnInner{
+  $pad: 10px;
+  display:inline-block;
+  &.left{
+    border-right:solid 1px;
+    padding-right:$pad;
+  }
+  &.right{
+    border-left:solid 1px;
+    padding-left:$pad;
   }
 }

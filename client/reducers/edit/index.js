@@ -4,5 +4,7 @@ import storage from './storage'
 
 const rootReducer = combineReducers({
   editor,
-  storage
+  storage,
 })
+
+export default rootReducer

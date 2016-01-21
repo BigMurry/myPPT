@@ -1,6 +1,8 @@
 import React from 'react'
 import Button from '../../components/Button'
 import TiPlus from 'react-icons/lib/ti/plus'
+import MdHourglassEmpty from 'react-icons/lib/md/hourglass-empty'
+import MdDone from 'react-icons/lib/md/done'
 import {connect} from 'react-redux'
 import cn from 'classnames'
 import styles from './style.scss'
@@ -26,20 +28,10 @@ const {
 const TIME_OUT = 2000
 
 class Edit extends Component{
-  static transToString(obj){
-    let ret = ''
-    for(let key in obj){
-      if(obj.hasOwnProperty(key)){
-        ret +=`[${key}]${obj[key]}\n`
-      }
-    }
-    return ret
-  }
 
   static defaultProps = {
     slidesCount:0,
     editPosition:0,
-    saving:false,
     generalInfo:{
       "title":'',
       "subTitle":'',
@@ -66,6 +58,27 @@ class Edit extends Component{
     this._handleGeneralChange = this._handleGeneralChange.bind(this)
     this._handleSlidesChange = this._handleSlidesChange.bind(this)
     this._timmerHandle = this._timmerHandle.bind(this)
+  }
+
+  get savingGeneralInfoStatus(){
+    const {savingGeneral} = this.props
+    if(savingGeneral){
+      return (
+        <span><MdHourglassEmpty /> saving general info...</span>
+      )
+    }else{
+      return (
+        <span><MdDone /> general info has been saved.</span>
+      )
+    }
+  }
+
+  get savingSlideInfoStatus(){
+    const {savingSlide} = this.props
+    return savingSlide ?
+        <span><MdHourglassEmpty /> saving slide info...</span>:
+        <span><MdDone /> slide info has been saved.</span>
+
   }
 
   componentWillMount(){
@@ -133,9 +146,10 @@ class Edit extends Component{
   render(){
 
     const {
-      generalInfo,
+      generalInfoStr,
+      slideInfoStr,
       slidesContent,
-      editPosition
+      editPosition,
     } = this.props
 
     return (
@@ -143,9 +157,10 @@ class Edit extends Component{
         <div className={styles.editContainer}>
           <div className={styles.generalBlock}>
             <p>General Information</p>
+            <div className={styles.saveMsg}>{this.savingGeneralInfoStatus}</div>
             <textarea
               className = {cn(styles.textArea, styles.generalEdit)}
-              value = {transToString(generalInfo)}
+              value = {generalInfoStr}
               onChange = {this._handleGeneralChange}
             />
           </div>
@@ -154,14 +169,16 @@ class Edit extends Component{
               <TiPlus className={cn('icon', styles.addIcon)}/>
             </Button>
             <Button className={styles.count}>
-              <div>{slidesContent.length}</div>
+              <div className={cn(styles.btnInner, styles.left)}>{editPosition}</div>
+              <div className={cn(styles.btnInner, styles.right)}>{slidesContent.length}</div>
             </Button>
           </div>
           <div className={styles.slidesBlock}>
             <p>Slides Information</p>
+            <div className={styles.saveMsg}>{this.savingSlideInfoStatus}</div>
             <textarea
               className = {cn(styles.textArea,styles.slidesEdit)}
-              value = {transToString(slidesContent[editPosition])}
+              value = {slideInfoStr}
               onChange = {this._handleSlidesChange}
             />
           </div>
@@ -173,10 +190,15 @@ class Edit extends Component{
 }
 
 function mapStateToProps(state){
+  const s = state.edit
   return {
-    editPosition: state.edit.position,
-    generalInfo: state.edit.generalInfo,
-    slidesContent: state.edit.slidesContent
+    editPosition: s.editor.editPosition,
+    generalInfo: s.editor.generalInfo,
+    slidesContent: s.editor.slidesContent,
+    generalInfoStr: s.editor.generalInfoStr,
+    slideInfoStr: s.editor.slideInfoStr,
+    savingSlide: s.storage.savingSlide,
+    savingGeneral: s.storage.savingGeneral,
   }
 }
 
