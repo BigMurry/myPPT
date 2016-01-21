@@ -177,7 +177,7 @@ class Edit extends Component{
             <Button onClick={this._onAdd}>
               <TiPlus className={`icon ${styles.addIcon}`}/>
             </Button>
-            <Button onClick={this._onDelete}>
+            <Button onClick={this._onDelete} disabled = {slidesCount === 0}>
               <TiTimes className={`icon ${styles.addIcon}`}/>
             </Button>
             <Button onClick={this._onPrevious} disabled = {editPosition <= 0}>

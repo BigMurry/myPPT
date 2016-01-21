@@ -13,6 +13,12 @@ function goNext(){
   }
 }
 
+function removeSlide(){
+  return {
+    type: ActionTypes.DELETE_SLIDE
+  }
+}
+
 
 export function addSlide(){
   return {
@@ -21,8 +27,17 @@ export function addSlide(){
 }
 
 export function deleteSlide(){
-  return {
-    type: ActionTypes.DELETE_SLIDE
+  return (dispatch, getState) => {
+    let state = getState().edit.editor,
+        pos = state.editPosition,
+        len = state.slidesContent.length
+    if(len > 0){
+      dispatch(removeSlide())
+      if(pos !== 0){
+        dispatch(goPrevious())
+      }
+    }
+    dispatch(reloadSlideInfo())
   }
 }
 
