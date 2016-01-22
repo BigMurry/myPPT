@@ -3,7 +3,7 @@ import {transformGeneralInfo, transformSlideInfo} from './editor'
 
 const TIME_OUT = 2000
 
-export function saveSlideIfNeeded(){
+export function saveSlideIfNeeded(isForce){
   return (dispatch, getState) => {
     const {
       generalInfoChanged,
@@ -12,10 +12,10 @@ export function saveSlideIfNeeded(){
       slideContentLastChange,
     } = getState().edit.storage
     const now = new Date().getTime()
-    if(generalInfoChanged && (now - generalInfoLastChange) >= TIME_OUT){
+    if(generalInfoChanged && (isForce || (now - generalInfoLastChange) >= TIME_OUT)){
       dispatch(saveGeneralInfo())
     }
-    if(slideContentChanged && (now - slideContentLastChange) >= TIME_OUT){
+    if(slideContentChanged && (isForce ||(now - slideContentLastChange) >= TIME_OUT)){
       dispatch(saveSlidesInfo())
     }
   }
@@ -40,6 +40,18 @@ export function saveSlidesInfo(){
     setTimeout(function(){
       dispatch(saveSlideInfoEnd())
     }, 2000)
+  }
+}
+
+export function generalInfoChanged(){
+  return {
+    type: ActionTypes.GENERAL_INFO_CHANGED
+  }
+}
+
+export function slideContentChanged(){
+  return {
+    type: ActionTypes.SLIDE_CONTENT_CHANGED
   }
 }
 

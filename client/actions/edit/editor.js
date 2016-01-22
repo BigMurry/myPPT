@@ -1,5 +1,5 @@
 import * as ActionTypes from '../../constants/ActionTypes'
-import {saveSlidesInfo} from './storage'
+import {saveSlideIfNeeded, generalInfoChanged, slideContentChanged} from './storage'
 
 function _goPrevious(){
   return {
@@ -22,6 +22,20 @@ function _removeSlide(){
 function _addSlide(){
   return {
     type: ActionTypes.ADD_SLIDE
+  }
+}
+
+function _changeGeneralInfo(generalInfo){
+  return {
+    type: ActionTypes.CHANGE_GENERAL_INFO,
+    generalInfo
+  }
+}
+
+function _changeSlidesContent(content){
+  return {
+    type: ActionTypes.CHANGE_SLIDES_CONTENT,
+    content
   }
 }
 
@@ -49,7 +63,7 @@ export function deleteSlide(){
 
 export function editPrevious(){
   return (dispatch, getState) => {
-    dispatch(saveSlidesInfo())
+    dispatch(saveSlideIfNeeded(true))
     dispatch(_goPrevious())
     dispatch(reloadSlideInfo())
   }
@@ -57,7 +71,7 @@ export function editPrevious(){
 
 export function editNext(){
   return (dispatch, getState) => {
-    dispatch(saveSlidesInfo())
+    dispatch(saveSlideIfNeeded(true))
     dispatch(_goNext())
     dispatch(reloadSlideInfo())
   }
@@ -94,16 +108,16 @@ export function openPreview(){
 }
 
 export function changeGeneralInfo(generalInfo){
-  return {
-    type: ActionTypes.CHANGE_GENERAL_INFO,
-    generalInfo
+  return (dispatch, getState) => {
+    dispatch(_changeGeneralInfo(generalInfo))
+    dispatch(generalInfoChanged())
   }
 }
 
 export function changeSlidesContent(content){
-  return {
-    type: ActionTypes.CHANGE_SLIDES_CONTENT,
-    content
+  return (dispatch, getState) => {
+    dispatch(_changeSlidesContent(content))
+    dispatch(slideContentChanged())
   }
 }
 
