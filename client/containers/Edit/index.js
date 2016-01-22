@@ -112,19 +112,11 @@ class Edit extends Component{
   _handleGeneralChange(e){
     const {dispatch} = this.props
     dispatch(changeGeneralInfo(e.target.value))
-    this.setState({
-      generalInfoChanged: true,
-      generalInfoLastChange: new Date().getTime()
-    })
   }
 
   _handleSlidesChange(e){
     const {dispatch} = this.props
     dispatch(changeSlidesContent(e.target.value))
-    this.setState({
-      slidesInfoChanged: true,
-      slidesInfoLastChange: new Date().getTime()
-    })
   }
 
   render(){
