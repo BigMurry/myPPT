@@ -29,21 +29,14 @@ const {
 const {
   saveGeneralInfo,
   saveSlidesInfo,
+  saveSlideIfNeeded,
 } = storage
 
-const TIME_OUT = 2000
 
 class Edit extends Component{
 
   constructor(props){
     super(props)
-
-    this.state = {
-      generalInfoChanged: false,
-      slidesInfoChanged: false,
-      generalInfoLastChange: 0,
-      slidesInfoLastChange:0,
-    }
 
     this._onAdd = this._onAdd.bind(this)
     this._onDelete = this._onDelete.bind(this)
@@ -78,7 +71,7 @@ class Edit extends Component{
 
   componentWillMount(){
     const {dispatch} = this.props
-    this.timmer = setInterval(this._timmerHandle, TIME_OUT)
+    this.timmer = setInterval(this._timmerHandle, 2000)
     dispatch(reloadIfNeeded())
   }
 
@@ -88,23 +81,7 @@ class Edit extends Component{
 
   _timmerHandle(){
     const {dispatch} = this.props
-    let {
-      generalInfoChanged,
-      slidesInfoChanged,
-      generalInfoLastChange,
-      slidesInfoLastChange,
-    } = this.state
-
-    const now = new Date().getTime()
-
-    if(generalInfoChanged && (now - generalInfoLastChange) >= TIME_OUT){
-        dispatch(saveGeneralInfo())
-        this.setState({generalInfoChanged: false})
-      }
-      if(slidesInfoChanged && (now - slidesInfoLastChange) >= TIME_OUT){
-        dispatch(saveSlidesInfo())
-        this.setState({slidesInfoChanged: false})
-      }
+    dispatch(saveSlideIfNeeded())
   }
 
   _onAdd(){
@@ -160,6 +137,7 @@ class Edit extends Component{
     } = this.props
 
     const slidesCount = slidesContent.length
+    const curPosition = slidesContent[editPosition] ? (editPosition + 1) : 'new slide'
 
     return (
       <div className={'content-container'}>
@@ -187,7 +165,7 @@ class Edit extends Component{
               <TiArrowRightThick className={`icon ${styles.addIcon}`}/>
             </Button>
             <Button className={styles.count}>
-              <div className={`${styles.btnInner} ${styles.left}`}>{editPosition}</div>
+              <div className={`${styles.btnInner} ${styles.left}`}>{curPosition}</div>
               <div className={`${styles.btnInner} ${styles.right}`}>{slidesCount}</div>
             </Button>
           </div>
