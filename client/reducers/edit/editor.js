@@ -52,7 +52,7 @@ export default function editor(state = initialState, action){
   let slides = state.slidesContent.slice()
   switch(action.type){
     case ActionTypes.ADD_SLIDE:
-      slides.splice(state.editPosition + 1, 0, {})
+      slides.splice(state.editPosition + 1, 0, null)
       return {
         ...state,
         slidesContent: slides,
