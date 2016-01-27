@@ -1,59 +1,61 @@
-var TRAVIS_WITHOUT_SAUCE = process.env.TRAVIS_SECURE_ENV_VARS === 'false'
+//var TRAVIS_WITHOUT_SAUCE = process.env.TRAVIS_SECURE_ENV_VARS === 'false'
 
-var launchers = {
-  sl_chrome: {
-    base: 'SauceLabs',
-    browserName: 'chrome',
-    platform: 'Windows 7',
-    version: '47'
-  },
-  sl_firefox: {
-    base: 'SauceLabs',
-    browserName: 'firefox',
-    version: '43'
-  },
-  sl_safari: {
-    base: 'SauceLabs',
-    browserName: 'safari',
-    version: '9',
-    platform: 'OS X 10.11'
-  },
-  sl_ie_11: {
-    base: 'SauceLabs',
-    browserName: 'internet explorer',
-    platform: 'Windows 8.1',
-    version: '11'
-  },
-  sl_ie_10: {
-    base: 'SauceLabs',
-    browserName: 'internet explorer',
-    platform: 'Windows 7',
-    version: '10'
-  }
-}
+//var launchers = {
+//  sl_chrome: {
+//    base: 'SauceLabs',
+//    browserName: 'chrome',
+//    platform: 'Windows 7',
+//    version: '47'
+//  },
+//  sl_firefox: {
+//    base: 'SauceLabs',
+//    browserName: 'firefox',
+//    version: '43'
+//  },
+//  sl_safari: {
+//    base: 'SauceLabs',
+//    browserName: 'safari',
+//    version: '9',
+//    platform: 'OS X 10.11'
+//  },
+//  sl_ie_11: {
+//    base: 'SauceLabs',
+//    browserName: 'internet explorer',
+//    platform: 'Windows 8.1',
+//    version: '11'
+//  },
+//  sl_ie_10: {
+//    base: 'SauceLabs',
+//    browserName: 'internet explorer',
+//    platform: 'Windows 7',
+//    version: '10'
+//  }
+//}
 
-var browsers = []
+//var browsers = []
 
-if (process.env.TRAVIS) {
-  if (TRAVIS_WITHOUT_SAUCE) {
-    browsers.push('Firefox')
-  } else {
-    browsers = Object.keys(launchers)
-  }
-} else {
-  browsers.push('Chrome')
-}
+//if (process.env.TRAVIS) {
+//  if (TRAVIS_WITHOUT_SAUCE) {
+//    browsers.push('Firefox')
+//  } else {
+//    browsers = Object.keys(launchers)
+//  }
+//} else {
+//  browsers.push('Chrome')
+//}
+
+var webpack = require('webpack')
 
 module.exports = function (config) {
   config.set({
     // base path, that will be used to resolve files and exclude
     basePath: '../..',
 
-    frameworks: ['browserify', 'mocha'],
+    frameworks: ['jasmine'],
 
     // list of files / patterns to load in the browser
     files: [
-      'test/client/*.js'
+      '__test__/client/tests.webpack.js'
     ],
 
     // list of files to exclude
@@ -61,18 +63,13 @@ module.exports = function (config) {
     ],
 
     preprocessors: {
-      'test/client/*.js': ['browserify']
+      '__test__/client/tests.webpack.js': ['webpack']
     },
 
     // use dots reporter, as travis terminal does not support escaping sequences
     // possible values: 'dots', 'progress'
     // CLI --reporters progress
-    reporters: ['progress', 'junit', 'saucelabs'],
-
-    junitReporter: {
-      // will be resolved to basePath (in the same way as files/exclude patterns)
-      outputFile: 'test-results.xml'
-    },
+    reporters: ['dots'],
 
     // web server port
     // CLI --port 9876
@@ -100,13 +97,13 @@ module.exports = function (config) {
     // - PhantomJS
     // - IE (only Windows)
     // CLI --browsers Chrome,Firefox,Safari
-    browsers: browsers,
+    browsers: ['Firefox'],
 
-    customLaunchers: launchers,
+    //customLaunchers: launchers,
 
     // If browser does not capture in given timeout [ms], kill it
     // CLI --capture-timeout 5000
-    captureTimeout: 50000,
+    //captureTimeout: 50000,
 
     // Auto run tests on start (when browsers are captured) and exit
     // CLI --single-run --no-single-run
@@ -117,12 +114,14 @@ module.exports = function (config) {
     reportSlowerThan: 500,
 
     plugins: [
-      'karma-mocha',
-      'karma-chrome-launcher',
+  //    'karma-mocha',
+  //    'karma-chrome-launcher',
       'karma-firefox-launcher',
-      'karma-junit-reporter',
-      'karma-browserify',
-      'karma-sauce-launcher'
+      'karma-webpack',
+      'karma-jasmine',
+  //    'karma-junit-reporter',
+  //    'karma-browserify',
+  //    'karma-sauce-launcher'
     ]
   })
 }
