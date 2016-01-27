@@ -2,7 +2,7 @@ var webpack = require('webpack')
 var path = require('path')
 var webpackDevMiddleware = require('webpack-dev-middleware')
 var webpackHotMiddleware= require('webpack-hot-middleware')
-var config = require('../config/webpack.config')
+var config = require('../.config/webpack.config')
 
 var express = require('express')
 var app = express()
