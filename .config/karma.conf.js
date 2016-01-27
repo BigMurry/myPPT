@@ -67,7 +67,7 @@ module.exports = function (config) {
     },
 
     webpack:{
-      devTools:'cheap-module-eval-source-map',
+      devtool:'cheap-module-eval-source-map',
       module:{
         loaders:[
           {
@@ -122,7 +122,7 @@ module.exports = function (config) {
     // - PhantomJS
     // - IE (only Windows)
     // CLI --browsers Chrome,Firefox,Safari
-    browsers: ['Firefox'],
+    browsers: ['Chrome'],
 
     //customLaunchers: launchers,
 
@@ -140,8 +140,8 @@ module.exports = function (config) {
 
     plugins: [
   //    'karma-mocha',
-  //    'karma-chrome-launcher',
-      'karma-firefox-launcher',
+      'karma-chrome-launcher',
+  //    'karma-firefox-launcher',
       'karma-webpack',
       'karma-jasmine',
   //    'karma-junit-reporter',
