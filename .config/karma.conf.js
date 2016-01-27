@@ -67,6 +67,7 @@ module.exports = function (config) {
     },
 
     webpack:{
+      devTools:'cheap-module-eval-source-map',
       module:{
         loaders:[
           {
