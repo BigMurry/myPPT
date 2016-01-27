@@ -49,13 +49,13 @@ var webpack = require('webpack')
 module.exports = function (config) {
   config.set({
     // base path, that will be used to resolve files and exclude
-    basePath: '../..',
+    basePath: '../',
 
     frameworks: ['jasmine'],
 
     // list of files / patterns to load in the browser
     files: [
-      '__test__/client/tests.webpack.js'
+      '__test__/client/index.js'
     ],
 
     // list of files to exclude
@@ -63,9 +63,33 @@ module.exports = function (config) {
     ],
 
     preprocessors: {
-      '__test__/client/tests.webpack.js': ['webpack']
+      '__test__/client/index.js': ['webpack']
     },
 
+    webpack:{
+      module:{
+        loaders:[
+          {
+            test:/\.jsx?$/,
+            exclude:/node_modules/,
+            loader:'babel',
+            query:{
+              presets:[
+                "es2015",
+                "react",
+                "stage-0"
+              ],
+              //ignore global babelrc config
+              babelrc: false,
+            },
+          }
+        ]
+      },
+      watch: true,
+    },
+    webpackServer:{
+      noInfo: true,
+    },
     // use dots reporter, as travis terminal does not support escaping sequences
     // possible values: 'dots', 'progress'
     // CLI --reporters progress
