@@ -6,7 +6,6 @@
     "start": "node server/server.js",
     "test-server": " webpack --config ./.config/test.webpack.config.js && ./node_modules/mocha/bin/mocha /tmp/testServerBundle.js",
     "test-client": "./node_modules/karma/bin/karma start --single-run",
-    "watch-test-client": "./node_modules/karma/bin/karma start",
     "test": "npm run test-client && npm run test-server"
   },
   "main": "client/client.html",
