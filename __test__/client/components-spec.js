@@ -3,28 +3,30 @@ import ReactDOM from 'react-dom'
 import TestUtils from 'react-addons-test-utils'
 import Button from '../../client/components/Button'
 
-describe('react component', () => {
+describe('react component', function(){
 
-  describe('Environment availble', () => {
-    it('TestUtils available', () => {
-      expect(TestUtils).not.toBe(undefined)
-      expect(TestUtils.renderIntoDocument).not.toBe(undefined)
-      expect(TestUtils).not.toBe(null)
-      expect(TestUtils.renderIntoDocument).not.toBe(null)
+  describe('Environment availble', function(){
+    it('TestUtils available', function (){
+      expect(TestUtils).to.be.ok
+      expect(TestUtils.renderIntoDocument).to.be.ok
     })
 
-    it('`jasmine` available', () => {
-      expect(jasmine).toBeTruthy()
-      expect(jasmine.createSpy).toBeTruthy()
+    it('`chai` available', function(){
+      expect(chai).to.be.ok
+      expect(chai).to.be.ok
+    })
+
+    it('sinon available', function(){
+      expect(sinon).to.be.ok
     })
   })
 
 
-  describe('Button `onClick` handler check', () => {
+  describe('Button `onClick` handler check', function(){
     let onClickHandler;
 
-    beforeEach(() => {
-      onClickHandler = jasmine.createSpy('onClickHandler')
+    beforeEach(function(){
+      onClickHandler = sinon.spy()
     })
 
     it('Button children', () => {
@@ -32,7 +34,7 @@ describe('react component', () => {
         <Button>Button to click</Button>
       )
       let btnNode = ReactDOM.findDOMNode(btn)
-      expect(btnNode.textContent).toEqual('Button to click')
+      expect(btnNode.textContent).to.equal('Button to click')
     })
 
     it('Disabled Button', () => {
@@ -42,10 +44,10 @@ describe('react component', () => {
       let btnNode = TestUtils.findRenderedDOMComponentWithTag(
         btn, 'button'
       )
-      expect(btnNode.disabled).toBe(true)
+      expect(btnNode.disabled).to.be.ok
 
       TestUtils.Simulate.click(btnNode)
-      expect(onClickHandler.calls.any()).toBe(false)
+      expect(onClickHandler.called).to.not.be.ok
     })
 
     it('Enabled Button', () => {
@@ -55,7 +57,7 @@ describe('react component', () => {
       TestUtils.Simulate.click(TestUtils.findRenderedDOMComponentWithTag(
         btn, 'button'
       ))
-      expect(onClickHandler.calls.any()).toBe(true)
+      expect(onClickHandler.called).to.be.ok
     })
   })
 })

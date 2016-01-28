@@ -51,7 +51,8 @@ module.exports = function (config) {
     // base path, that will be used to resolve files and exclude
     basePath: '../',
 
-    frameworks: ['jasmine'],
+    //frameworks: ['jasmine'],
+    frameworks: ['mocha', 'chai', 'sinon'],
 
     // list of files / patterns to load in the browser
     files: [
@@ -139,12 +140,14 @@ module.exports = function (config) {
     reportSlowerThan: 500,
 
     plugins: [
-  //    'karma-mocha',
+      'karma-mocha',
+      'karma-chai',
+      'karma-sinon',
       'karma-spec-reporter',
       'karma-chrome-launcher',
   //    'karma-firefox-launcher',
       'karma-webpack',
-      'karma-jasmine',
+  //    'karma-jasmine',
   //    'karma-junit-reporter',
   //    'karma-browserify',
   //    'karma-sauce-launcher'
