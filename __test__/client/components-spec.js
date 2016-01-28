@@ -1,52 +1,61 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import TestUtils from 'react-addons-test-utils'
-
 import Button from '../../client/components/Button'
 
-describe('react component functionality', () => {
-  let handlers = {
-    click: (e) => {
-      console.log('clicked')
-    }
-  }
+describe('react component', () => {
 
-  it('TestUtils', () => {
-    expect(TestUtils).not.toBe(undefined)
-    expect(TestUtils.renderIntoDocument).not.toBe(undefined)
-    expect(TestUtils).not.toBe(null)
-    expect(TestUtils.renderIntoDocument).not.toBe(null)
+  describe('Environment availble', () => {
+    it('TestUtils available', () => {
+      expect(TestUtils).not.toBe(undefined)
+      expect(TestUtils.renderIntoDocument).not.toBe(undefined)
+      expect(TestUtils).not.toBe(null)
+      expect(TestUtils.renderIntoDocument).not.toBe(null)
+    })
+
+    it('`jasmine` available', () => {
+      expect(jasmine).toBeTruthy()
+      expect(jasmine.createSpy).toBeTruthy()
+    })
   })
 
-  it('Disabled Button', () => {
-    let btn = TestUtils.renderIntoDocument(
-      <Button disabled={true} onClick={handlers.click}>Button to click</Button>
-    )
-    let btnNode = ReactDOM.findDOMNode(btn)
-    expect(btnNode.textContent).toEqual('Button to click')
 
-    let btnEl = TestUtils.findRenderedDOMComponentWithTag(
-      btn, 'button'
-    )
+  describe('Button `onClick` handler check', () => {
+    let onClickHandler;
 
-    expect(TestUtils.isDOMComponent(btnEl)).toBe(true)
-    expect(btnEl.disabled).toBe(true)
+    beforeEach(() => {
+      onClickHandler = jasmine.createSpy('onClickHandler')
+    })
 
-    spyOn(handlers, 'click').and.callThrough()
-    TestUtils.Simulate.click(TestUtils.findRenderedDOMComponentWithTag(
-      btn, 'button'
-    ))
-    expect(handlers.click.calls.any()).toBe(false)
-  })
+    it('Button children', () => {
+      let btn = TestUtils.renderIntoDocument(
+        <Button>Button to click</Button>
+      )
+      let btnNode = ReactDOM.findDOMNode(btn)
+      expect(btnNode.textContent).toEqual('Button to click')
+    })
 
-  it('enabled button', () => {
-    let btn = TestUtils.renderIntoDocument(
-      <Button disabled={false} onClick={handlers.click}>Enabled Button</Button>
-    )
-    spyOn(handlers,'click').and.callThrough()
-    TestUtils.Simulate.click(TestUtils.findRenderedDOMComponentWithTag(
-      btn, 'button'
-    ))
-    expect(handlers.click.calls.any()).toBe(true)
+    it('Disabled Button', () => {
+      let btn = TestUtils.renderIntoDocument(
+        <Button disabled={true}>A Button</Button>
+      )
+      let btnNode = TestUtils.findRenderedDOMComponentWithTag(
+        btn, 'button'
+      )
+      expect(btnNode.disabled).toBe(true)
+
+      TestUtils.Simulate.click(btnNode)
+      expect(onClickHandler.calls.any()).toBe(false)
+    })
+
+    it('Enabled Button', () => {
+      let btn = TestUtils.renderIntoDocument(
+        <Button disabled={false} onClick={onClickHandler}>Enabled Button</Button>
+      )
+      TestUtils.Simulate.click(TestUtils.findRenderedDOMComponentWithTag(
+        btn, 'button'
+      ))
+      expect(onClickHandler.calls.any()).toBe(true)
+    })
   })
 })
