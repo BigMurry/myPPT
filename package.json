@@ -38,6 +38,7 @@
     "chai": "^3.4.1",
     "css-loader": "^0.23.1",
     "file-loader": "^0.8.5",
+    "gulp": "^3.9.0",
     "karma": "^0.13.19",
     "karma-chai": "^0.1.0",
     "karma-chrome-launcher": "^0.2.2",
