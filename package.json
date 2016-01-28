@@ -5,8 +5,8 @@
   "scripts": {
     "start": "node server/server.js",
     "test-server": " webpack --config ./.config/test.webpack.config.js && ./node_modules/mocha/bin/mocha /tmp/testServerBundle.js",
-    "test-client": "./node_modules/karma/bin/karma start --single-run",
-    "test": "npm run test-client && npm run test-server"
+    "test-client": "./node_modules/karma/bin/karma start",
+    "test": "npm run test-server && npm run test-client -- --single-run"
   },
   "main": "client/client.html",
   "dependencies": {
