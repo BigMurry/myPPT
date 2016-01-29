@@ -28,6 +28,7 @@
 import gulp from 'gulp';
 //import del from 'del';
 //import runSequence from 'run-sequence';
+import {spawn} from 'child_process';
 import gulpLoadPlugins from 'gulp-load-plugins';
 import pkg from './package.json';
 
@@ -35,6 +36,11 @@ const $ = gulpLoadPlugins();
 const TEST_CLIENT = pkg.scripts['test-client']
 const TEST_SERVER = pkg.scripts['test-server']
 const TEST_ALL = pkg.scripts['test']
+
+function splitCmd(cmd){
+
+}
+
 
 gulp.task('autoTest', () => {
   gulp.watch('__test__/client/**/*.js', ['test-client'] )
