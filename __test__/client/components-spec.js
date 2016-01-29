@@ -21,7 +21,6 @@ describe('react component', function(){
     })
   })
 
-
   describe('Button `onClick` handler check', function(){
     let onClickHandler;
 
