@@ -4,9 +4,6 @@
   "private": true,
   "scripts": {
     "start": "NODE_ENV=development node server/server.js",
-    "test-server": "NODE_ENV=test webpack --config ./.config/test.webpack.config.js && ./node_modules/mocha/bin/mocha /tmp/testServerBundle.js",
-    "test-client": "NODE_ENV=test ./node_modules/karma/bin/karma start --single-run",
-    "test": "npm run test-server && npm run test-client -- --single-run",
     "dev": "NODE_ENV=test gulp"
   },
   "main": "client/client.html",
@@ -42,6 +39,8 @@
     "file-loader": "^0.8.5",
     "gulp": "^3.9.0",
     "gulp-load-plugins": "^1.2.0",
+    "gulp-mocha": "^2.2.0",
+    "gulp-rename": "^1.2.2",
     "gulp-shell": "^0.5.2",
     "karma": "^0.13.19",
     "karma-chai": "^0.1.0",
@@ -64,6 +63,7 @@
     "style-loader": "^0.13.0",
     "webpack": "^1.12.9",
     "webpack-dev-middleware": "^1.4.0",
-    "webpack-hot-middleware": "^2.6.0"
+    "webpack-hot-middleware": "^2.6.0",
+    "webpack-stream": "^3.1.0"
   }
 }

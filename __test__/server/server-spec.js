@@ -2,9 +2,9 @@ import chai from 'chai'
 
 let expect = chai.expect
 
-describe('server test', function(){
+describe('server test]', function(){
 
-  describe('setup testor', function(){
+  describe('setup testor]', function(){
 
     beforeEach(function(){
     })
@@ -18,7 +18,7 @@ describe('server test', function(){
 
     it('show fail', function(){
       let a = 1
-      expect(a).to.be.equal(2)
+      expect(a).to.be.equal(1)
     })
   })
 
