@@ -14,7 +14,7 @@ export default class Button extends Component{
   static defaultProps = {
     type: 'button',
     disabled: false,
-  }
+  };
 
   render(){
     const {children, onClick, disabled, type, style, className} = this.props
