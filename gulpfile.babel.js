@@ -40,4 +40,8 @@ gulp.task('autoTest', () => {
   gulp.watch(['__test__/server/**/*.js', 'server/**/*.js'], ['server-test'] )
 })
 
+gulp.task('test', ['client-test', 'server-test'], () => {
+  process.exit()
+})
+
 gulp.task('default',['autoTest'])
