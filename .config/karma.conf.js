@@ -114,7 +114,7 @@ module.exports = function (config) {
     // - PhantomJS
     // - IE (only Windows)
     // CLI --browsers Chrome,Firefox,Safari
-    browsers: ['Chrome'],
+    browsers: ['Firefox'],
 
     //customLaunchers: launchers,
 
@@ -135,8 +135,8 @@ module.exports = function (config) {
       'karma-chai',
       'karma-sinon',
       'karma-spec-reporter',
-      'karma-chrome-launcher',
-  //    'karma-firefox-launcher',
+  //    'karma-chrome-launcher',
+      'karma-firefox-launcher',
       'karma-webpack',
   //    'karma-jasmine',
   //    'karma-junit-reporter',
