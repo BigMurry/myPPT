@@ -1,6 +1,7 @@
 language: node_js
 node_js:
-  -5.3.x
+  - "5"
+  - "4"
 before_script:
   - npm install -g gulp
   - export DISPLAY=:99.0
