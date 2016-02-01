@@ -36,8 +36,8 @@ gulp.task('client-test', (cb) => {
 })
 
 gulp.task('autoTest', () => {
-  gulp.watch('__test__/client/**/*.js', ['client-test'] )
-  gulp.watch('__test__/server/**/*.js', ['server-test'] )
+  gulp.watch(['__test__/client/**/*.js', 'client/**/*.js'], ['client-test'] )
+  gulp.watch(['__test__/server/**/*.js', 'server/**/*.js'], ['server-test'] )
 })
 
 gulp.task('default',['autoTest'])
