@@ -33,6 +33,7 @@ PPTSchema.methods = {
     return this.save()
   },
   updateGeneralInfo(generalInfo){
+    if(generalInfo && generalInfo.creator){this.creator = generalInfo.creator}
     if(generalInfo && generalInfo.title){this.title = generalInfo.title}
     if(generalInfo && generalInfo.subTitle){this.subTitle = generalInfo.subTitle}
     if(generalInfo && generalInfo.license){this.license = generalInfo.license}

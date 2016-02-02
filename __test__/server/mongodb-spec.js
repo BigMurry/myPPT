@@ -10,7 +10,6 @@ let expect = chai.expect
 
 describe('[mongodb available]', function(){
 
-
   describe('[insert]', function(){
 
     let PPT
@@ -45,7 +44,81 @@ describe('[mongodb available]', function(){
           expect(ppt.subTitle).to.be.equal('test sub-title')
           done()
         })
+      })
+    })
 
+    it('should load ok', function(done){
+      let ppt = new PPT({
+        creator: 'testor',
+        title:'test title',
+        subTitle:'test sub-title'
+      })
+
+      ppt.save(function(err){
+        PPT.load({
+          criteria: {creator: 'testor'},
+          select:'creator title subTitle modifiedOn createOn'
+        }, function(err, ppt){
+          expect(err).to.be.not.ok
+          expect(ppt).to.be.ok
+          expect(ppt.creator).to.be.equal('testor')
+          expect(ppt.title).to.be.equal('test title')
+          expect(ppt.subTitle).to.be.equal('test sub-title')
+          expect(ppt.createOn).to.be.ok
+          expect(ppt.modifiedOn).to.be.ok
+          expect(ppt.license).to.be.not.ok
+          done()
+        })
+      })
+    })
+
+    describe('should save ok', function(){
+
+      let ppt
+      beforeEach(function(done){
+        ppt = new PPT({
+          creator: 'testor1',
+          title:'title1',
+          subTitle:'sub-title1',
+        })
+        ppt.save(function (err){
+          let generalInfo= {
+            creator:'testor2',
+            title:'title2'
+          }
+          ppt.updateGeneralInfo(generalInfo).then(function(err){
+            done()
+          })
+        })
+      })
+
+      it('ppt should changed', function(){
+        expect(ppt).to.be.ok
+        expect(ppt.creator).to.be.equal('testor2')
+        expect(ppt.title).to.be.equal('title2')
+      })
+
+      it('should general info with testor1 not exist', function(done){
+          PPT.load({
+            criteria:{creator:'testor1'}
+          }, function(err, p){
+            expect(p).to.be.not.ok
+            done()
+          })
+      })
+
+      it('should general info with testor2 exist', function(done){
+        PPT.load({
+          criteria: {creator: 'testor2'}
+        }, function(err, p){
+          expect(p).to.be.ok
+          expect(p.creator).to.be.equal('testor2')
+          done()
+        })
+      })
+
+      it('should save slide info ok', function(done){
+        done()
       })
     })
   })
