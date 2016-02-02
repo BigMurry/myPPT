@@ -11,7 +11,8 @@ const PPTSchema = new Schema({
   license:{type: String, default:''},
   slides:[{
     head:{type: String, default:''},
-    content:{type: String, default:''}
+    content:{type: String, default:''},
+    extras: Schema.Types.Mixed
   }]
 })
 
@@ -39,6 +40,21 @@ PPTSchema.methods = {
     if(generalInfo && generalInfo.license){this.license = generalInfo.license}
     return this.save()
   },
+
+  updateSlide(slideInfo){
+    let self = this
+    if(slideInfo && slideInfo.length !== 0){
+      slideInfo.forEach((info) => {
+        let index = info.index
+        if(self.slides.length >= index){
+          if(info.head){self.set(`slides.${index}.head`, info.head)}
+          if(info.content){self.set(`slides.${index}.content`, info.content)}
+          if(info.extras){self.set(`slides.${index}.extras`, info.extras)}
+        }
+      })
+    }
+    return this.save()
+  }
 }
 
 PPTSchema.statics = {
