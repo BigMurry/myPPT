@@ -19,7 +19,7 @@ describe('[mongodb available]', function(){
       done()
     })
 
-    afterEach(function(done){
+    after(function(done){
       PPT.remove({}, function(){
         done()
       })
@@ -72,24 +72,35 @@ describe('[mongodb available]', function(){
       })
     })
 
-    describe('should save ok', function(){
+    describe('should general info save ok', function(){
 
       let ppt
-      beforeEach(function(done){
+
+      before(function(done){
         ppt = new PPT({
           creator: 'testor1',
           title:'title1',
           subTitle:'sub-title1',
         })
-        ppt.save(function (err){
-          let generalInfo= {
+        ppt.save(function(err){
+          done()
+        })
+      })
+
+      after(function(done){
+        PPT.remove({}, function(){
+          done()
+        })
+      })
+
+      beforeEach(function(done){
+        let generalInfo= {
             creator:'testor2',
             title:'title2'
           }
           ppt.updateGeneralInfo(generalInfo).then(function(err){
             done()
           })
-        })
       })
 
       it('ppt should changed', function(){
@@ -116,11 +127,51 @@ describe('[mongodb available]', function(){
           done()
         })
       })
-
-      it('should save slide info ok', function(done){
-        done()
-      })
     })
+
+    describe('should slide info save ok', function(){
+
+      let ppt
+
+      before(function(done){
+        ppt = new PPT({
+          creator:'creator3',
+          title:'title3',
+          subTitle:'sub-title3'
+        })
+
+        let slide = {
+          head:'slide1',
+          content:'content1'
+        }
+
+        ppt.addSlide(slide).then(function(){
+          done()
+        })
+
+      })
+
+      after(function(done){
+        PPT.remove({}, function(){
+          done()
+        })
+      })
+
+      it('should have a slide', function(done){
+        PPT.load({
+          criteria:{creator: 'creator3'},
+          select:'creator slides title subTitle'
+        }, function(err, p){
+          expect(p).to.be.ok
+          expect(p.slides).to.have.length(1)
+          expect(p.slides[0].head).to.be.equal('slide1')
+          expect(p.slides[0].content).to.be.equal('content1')
+          done()
+        })
+      })
+
+    })
+
   })
 
 })
