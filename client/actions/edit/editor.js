@@ -39,6 +39,15 @@ function _changeSlidesContent(content){
   }
 }
 
+function checkGeneralSlug(state){
+  return state.generalInfoSlug === (state.generalInfo._id + state.generalInfo._v)
+}
+
+function checkSlideSlug(state){
+  let slide = state.slidesContent[state.editPosition]
+  return state.slideInfoSlug === (slide._id + slide._v)
+}
+
 export function addSlide(){
   return (dispatch, getState) => {
     dispatch(_addSlide())
@@ -80,10 +89,10 @@ export function editNext(){
 export function reloadIfNeeded(){
   return (dispatch, getState) => {
     let state = getState().edit.editor
-    if(state.generalInfoId !== state.generalInfo.id){
+    if(!checkGeneralSlug(state)){
       dispatch(reloadGeneralInfo())
     }
-    if(state.slideInfoId !== state.slidesContent[state.editPosition].id){
+    if(!checkSlideSlug(state)){
       dispatch(reloadSlideInfo())
     }
   }

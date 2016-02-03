@@ -3,20 +3,22 @@ import * as ActionTypes from '../../constants/ActionTypes'
 const initialState = {
   editPosition: 0,
   generalInfo: {
-    "id":'g1',
+    "_id":'g1',
+    "_v":0,
     "title":'How to learn Nodejs',
     "subTitle":'A foo ppt example',
     "author":'murry.diao',
     "company":'avepoint',
     "email":'murry.diao@avepoint.com',
   },
-  generalInfoId:'',
-  slideInfoId:'',
+  generalInfoSlug:'',
+  slideInfoSlug:'',
   generalInfoStr:'',
   slideInfoStr:'',
   slidesContent:[
     {
-      "id":'s1',
+      "_id":'s1',
+      "_v":0,
       "head":'Outlines',
       "content":'## what is nodejs\n ## how to use Nodejs\n'
     }
@@ -27,7 +29,7 @@ const initialState = {
 function transToString(obj){
   let ret = ''
   for(let key in obj){
-    if(obj.hasOwnProperty(key) && key !== 'id'){
+    if(obj.hasOwnProperty(key) && key !== '_id' && key !== '_v'){
       ret +=`[${key}]${obj[key]}\n`
     }
   }
@@ -40,7 +42,7 @@ function transToObj(str){
   let match = reg.exec(str)
   while(match){
     let v = match[2].replace(/\n$/,'')
-    if(match[1] !== 'id'){
+    if(match[1] !== '_id' && match[1] !== '_v'){
       obj[match[1]] = v
     }
     match = reg.exec(str)
@@ -92,10 +94,10 @@ export default function editor(state = initialState, action){
     case ActionTypes.TRANSFORM_GENERAL_INFO:
       return {
         ...state,
-        generalInfo: transToObj(state.generalInfoStr)
+        generalInfo: Object.assign({},state.generalInfo, transToObj(state.generalInfoStr))
       }
     case ActionTypes.TRANSFORM_SLIDE_INFO:
-      slides.splice(state.editPosition, 1, transToObj(state.slideInfoStr))
+      slides.splice(state.editPosition, 1, Object.assign({},state.slidesContent[state.editPosition], transToObj(state.slideInfoStr)))
       return {
         ...state,
         slidesContent: slides
