@@ -5,6 +5,7 @@ import '../../server/models'
 const expect = chai.expect
 
 //mongoose.connect('mongodb://localhost/ppt_test')
+mongoose.connect('mongodb://localhost/ppt_test2')
 
 describe('user schema api', function(){
 
@@ -18,6 +19,7 @@ describe('user schema api', function(){
     User.remove({}, function(){
       done()
     })
+    mongoose.connection.close()
   })
 
   describe('virtual field', function(){

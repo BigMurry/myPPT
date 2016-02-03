@@ -606,4 +606,7 @@ describe('[mongodb available]', function(){
 
   })
 
+  after(function(){
+    mongoose.connection.close()
+  })
 })
