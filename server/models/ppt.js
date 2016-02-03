@@ -1,6 +1,8 @@
 import mongoose from 'mongoose'
 
 const Schema = mongoose.Schema
+const _DefaultSelect = 'creator title subTitle modifiedOn keywords stars license'
+const _DefaultOrder = {'stars': -1, 'createOn': 1, 'status': -1}
 
 const PPTSchema = new Schema({
   creator:{type: String, default:'Anonymous', trim: true},
@@ -8,8 +10,10 @@ const PPTSchema = new Schema({
   modifiedOn:{type: Date, default: Date.now()},
   title:{type: String, default:'', trim: true},
   subTitle:{type: String, default:'', trim: true},
-  keywords:{type:String, default:'', trim: true},
-  license:{type: String, default:''},
+  keywords:{type:String, default: '', trim: true},
+  license:{type: String, default: ''},
+  stars:{type: Number, default: 0},
+  status:{type: Number, default: 0},
   slides:[{
     head:{type: String, default:''},
     content:{type: String, default:''},
@@ -68,13 +72,54 @@ PPTSchema.methods = {
 
 PPTSchema.statics = {
   load(options, cb){
-    options.select = options.select || 'creator modifiedOn title'
+    options.select = options.select || _DefaultSelect
     this.findOne(options.criteria)
         .select(options.select)
         .exec(cb)
   },
-  searchPPT(options, cb){
+  search(options, cb){
+    let opt = Object.assign({
+      select: _DefaultSelect,
+      pageCount:10,
+      pageNumber:1
+    }, options)
 
+    opt.order = Object.assign({}, opt.order, _DefaultOrder, opt.order)
+
+    let criteria = null
+    if(opt.key){
+      let reg = new RegExp(`(?:\\b|^|;)${opt.key}(?:\\b|$|;)`,'i')
+      criteria = {
+        $or:[
+          {'title': reg},
+          {'keywords': reg}
+        ]
+      }
+    }
+
+    this.find(criteria)
+    .sort(opt.order)
+    .select(opt.select)
+    .skip(opt.pageCount * (opt.pageNumber -1))
+    .limit(opt.pageCount)
+    .exec(cb)
+  },
+
+  findByUser(options, cb){
+    let opt = Object.assign({
+      select: _DefaultSelect,
+      pageCount: 10,
+      pageNumber: 1
+    }, options)
+    opt.order = Object.assign({}, opt.order, _DefaultOrder, opt.order)//
+
+    console.log(opt.order)
+    this.find({'creator': opt.user})
+        .sort(opt.order)
+        .select(opt.select)
+        .skip(opt.pageCount * (opt.pageNumber -1))
+        .limit(opt.pageCount)
+        .exec(cb)
   },
 
 }

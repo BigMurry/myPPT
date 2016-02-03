@@ -301,45 +301,305 @@ describe('[mongodb available]', function(){
     })
 
     describe('search PPT', function(){
+      //this.timeout(10000)
+      before(function(done){
+        let ppts = []
+        ppts.push(new PPT({
+          title:'ppt1',
+          creator:'c1',
+          keywords:'k1;l1;h1',
+        }))
+        ppts.push(new PPT({
+          title:'ppt2',
+          creator:'c2',
+          keywords:'k1;l2;h2',
+        }))
+        ppts.push(new PPT({
+          title:'ppt3',
+          creator:'c1',
+          keywords:'k2;l1;h2',
+        }))
+        ppts.push(new PPT({
+          title:'ppt4',
+          creator:'c2',
+          keywords:'k2;l2;h1',
+        }))
+        ppts.push(new PPT({
+          title:'ppt5',
+          creator:'c2',
+          keywords:'k2;l2;h2',
+        }))
+        ppts.push(new PPT({
+          title:'ppt6',
+          creator:'c3',
+          keywords:'k3',
+        }))
+        ppts.push(new PPT({
+          title:'ppt7',
+          creator:'c3',
+          keywords:'ppt8',
+        }))
+        ppts.push(new PPT({
+          title:'ppt8',
+          creator:'c3',
+          keywords:'k4',
+        }))
+        ppts.push(new PPT({
+          title:'ppt9ppt9',
+          creator:'c4',
+          keywords:'k5k5',
+        }))
+        ppts.push(new PPT({
+          title:'ppt9-ppt9',
+          creator:'c4',
+          keywords:'k5k5;k5',
+        }))
+        ppts.push(new PPT({
+          title:'ppt9ppt9',
+          creator:'c4',
+          keywords:'k5-k5',
+        }))
+        ppts.push(new PPT({
+          title:'ppt10',
+          creator:'c4',
+          keywords:'k6;kk6',
+          stars:1,
+        }))
+        ppts.push(new PPT({
+          title:'ppt11',
+          creator:'c4',
+          keywords:'k7;kk6',
+          stars:1,
+        }))
+        ppts.push(new PPT({
+          title:'ppt12',
+          creator:'c4',
+          keywords:'k8;kk6',
+          stars:2,
+        }))
+        let total = ppts.length
+        function saveAll(){
+          let doc = ppts.shift()
+          doc.save(function(err, d){
+            if(err) throw err
+            if(--total) saveAll()
+            else done()
+          })
+        }
+
+        saveAll()
+      })
+
+      after(function(done){
+        PPT.remove({}, function(err){
+          done()
+        })
+      })
 
       it('should search by title ok', function(done){
-        done()
+        PPT.search({
+          key:'ppt1',
+          select:'title creator keywords createOn'
+        }, function(err, results){
+          expect(err).to.be.not.ok
+          expect(results).to.have.length(1)
+          expect(results[0].get('title')).to.be.equal('ppt1')
+          expect(results[0].get('creator')).to.be.equal('c1')
+          expect(results[0].get('keywords')).to.be.equal('k1;l1;h1')
+          done()
+        })
       })
 
       it('should search by key ok, when there only one key', function(done){
-        done()
+        PPT.search({
+          key:'k3',
+          select:'title creator keywords createOn'
+        }, function(err, results){
+          expect(err).to.be.not.ok
+          expect(results).to.have.length(1)
+          expect(results[0].get('title')).to.be.equal('ppt6')
+          expect(results[0].get('creator')).to.be.equal('c3')
+          expect(results[0].get('keywords')).to.be.equal('k3')
+          done()
+        })
       })
 
       it('should search by key ok, when multi-keys exist', function(done){
-        done()
+        PPT.search({
+          key:'k1',
+          select:'title creator keywords createOn'
+        }, function(err, results){
+          expect(err).to.be.not.ok
+          expect(results).to.have.length(2)
+          expect(results[0].get('title')).to.be.equal('ppt1')
+          expect(results[0].get('creator')).to.be.equal('c1')
+          expect(results[0].get('keywords')).to.be.equal('k1;l1;h1')
+          expect(results[1].get('title')).to.be.equal('ppt2')
+          expect(results[1].get('creator')).to.be.equal('c2')
+          expect(results[1].get('keywords')).to.be.equal('k1;l2;h2')
+          done()
+        })
       })
 
-      it('should title match comes first, then key matched records comes', function(done){
-        done()
+      it('should search title split by word, NOT split in the middle of a word', function(done){
+        PPT.search({
+          key:'ppt9',
+          select:'title creator keywords createOn'
+        }, function(err, results){
+          expect(err).to.be.not.ok
+          expect(results).to.have.length(1)
+          expect(results[0].get('title')).to.be.equal('ppt9-ppt9')
+          expect(results[0].get('creator')).to.be.equal('c4')
+          expect(results[0].get('keywords')).to.be.equal('k5k5;k5')
+          done()
+        })
       })
 
-      it('should keys match order by priority, first comes first', function(done){
-        done()
+      it('should search keywords split by word, NOT split in the middle of a word', function(done){
+        PPT.search({
+          key:'k5',
+          select:'title creator keywords createOn'
+        }, function(err, results){
+          expect(err).to.be.not.ok
+          expect(results).to.have.length(2)
+          expect(results[0].get('title')).to.be.equal('ppt9-ppt9')
+          expect(results[0].get('creator')).to.be.equal('c4')
+          expect(results[0].get('keywords')).to.be.equal('k5k5;k5')
+          expect(results[1].get('title')).to.be.equal('ppt9ppt9')
+          expect(results[1].get('creator')).to.be.equal('c4')
+          expect(results[1].get('keywords')).to.be.equal('k5-k5')
+          done()
+        })
+      })
+
+      it('should sort by stars-descending first then createOn-ascending', function(done){
+        PPT.search({
+          key:'kk6',
+          select:'title creator keywords createOn'
+        }, function(err, results){
+          expect(err).to.be.not.ok
+          expect(results).to.have.length(3)
+          expect(results[0].get('title')).to.be.equal('ppt12')
+          expect(results[1].get('title')).to.be.equal('ppt10')
+          expect(results[2].get('title')).to.be.equal('ppt11')
+          done()
+        })
       })
 
     })
 
     describe('find PPT', function(){
+      this.timeout(10000)
+      before(function(done){
+        let ppts = []
+        ppts.push(new PPT({
+          title:'ppt1',
+          creator:'c1',
+          keywords:'k1;',
+          stars:1,
+          status:1
+        }))
+        ppts.push(new PPT({
+          title:'ppt2',
+          creator:'c1',
+          keywords:'k2;',
+          stars:1,
+          status:2,
+        }))
+        ppts.push(new PPT({
+          title:'ppt3',
+          creator:'c1',
+          keywords:'k3;',
+          stars:2,
+          status:2,
+        }))
+        ppts.push(new PPT({
+          title:'ppt4',
+          creator:'c1',
+          keywords:'k4;',
+          stars:3,
+          status:3,
+        }))
+        ppts.push(new PPT({
+          title:'ppt5',
+          creator:'c2',
+          keywords:'k5;',
+          stars:4,
+          status:4,
+        }))
+        let total = ppts.length
+        function saveAll(){
+          let doc = ppts.shift()
+          doc.save(function(err, d){
+            if(err) throw err
+            setTimeout(function(){
+              if(--total) saveAll()
+              else done()
+            }, 1000)
+
+          })
+        }
+        saveAll()
+      })
+
+      after(function(done){
+        PPT.remove({}, function(err){
+          done()
+        })
+      })
 
       it('should find all ppts by one creator', function(done){
-        done()
+        PPT.findByUser({
+          user:'c1',
+          select:'title creator createOn stars keywords'
+        }, function(err, results){
+          expect(results).to.have.length(4)
+          done()
+        })
       })
 
-      it('should default sort by create date', function(done){
-        done()
+      it('should sort default by: stars, create date, status', function(done){
+        PPT.findByUser({
+          user:'c1',
+          select:'title creator createOn stars keywords'
+        }, function(err, results){
+          expect(results).to.have.length(4)
+          expect(results[0].get('title')).to.be.equal('ppt4')
+          expect(results[1].get('title')).to.be.equal('ppt3')
+          expect(results[2].get('title')).to.be.equal('ppt1')
+          expect(results[3].get('title')).to.be.equal('ppt2')
+          done()
+        })
       })
 
-      it('should can sort by stars', function(done){
-        done()
+      it('should sort by create date', function(done){
+        PPT.findByUser({
+          user:'c1',
+          order:{'createOn':-1},
+          select:'title creator createOn stars keywords'
+        }, function(err, results){
+          expect(results).to.have.length(4)
+          expect(results[0].get('title')).to.be.equal('ppt4')
+          expect(results[1].get('title')).to.be.equal('ppt3')
+          expect(results[2].get('title')).to.be.equal('ppt2')
+          expect(results[3].get('title')).to.be.equal('ppt1')
+          done()
+        })
       })
 
       it('should can sort by status', function(done){
-        done()
+        PPT.findByUser({
+          user:'c1',
+          order:{'status':1},
+          select:'title creator createOn stars keywords'
+        }, function(err, results){
+          expect(results).to.have.length(4)
+          expect(results[0].get('title')).to.be.equal('ppt1')
+          expect(results[1].get('title')).to.be.equal('ppt3')
+          expect(results[2].get('title')).to.be.equal('ppt2')
+          expect(results[3].get('title')).to.be.equal('ppt4')
+          done()
+        })
       })
 
     })
