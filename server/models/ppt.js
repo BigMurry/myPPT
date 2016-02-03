@@ -8,6 +8,7 @@ const PPTSchema = new Schema({
   modifiedOn:{type: Date, default: Date.now()},
   title:{type: String, default:'', trim: true},
   subTitle:{type: String, default:'', trim: true},
+  keywords:{type:String, default:'', trim: true},
   license:{type: String, default:''},
   slides:[{
     head:{type: String, default:''},
@@ -33,6 +34,7 @@ PPTSchema.methods = {
 
     return this.save()
   },
+
   updateGeneralInfo(generalInfo){
     if(generalInfo && generalInfo.creator){this.creator = generalInfo.creator}
     if(generalInfo && generalInfo.title){this.title = generalInfo.title}
@@ -46,10 +48,17 @@ PPTSchema.methods = {
     if(slideInfo && slideInfo.length !== 0){
       slideInfo.forEach((info) => {
         let index = info.index
-        if(self.slides.length >= index){
+        if(self.slides.length > index){
           if(info.head){self.set(`slides.${index}.head`, info.head)}
           if(info.content){self.set(`slides.${index}.content`, info.content)}
           if(info.extras){self.set(`slides.${index}.extras`, info.extras)}
+        }else if(self.slides.length <= index){
+          let slide = {
+            head:info.head,
+            content:info.content,
+            extras:info.extras
+          }
+          self.slides.push(slide)
         }
       })
     }
@@ -63,7 +72,10 @@ PPTSchema.statics = {
     this.findOne(options.criteria)
         .select(options.select)
         .exec(cb)
-  }
+  },
+  searchPPT(options, cb){
+
+  },
 
 }
 

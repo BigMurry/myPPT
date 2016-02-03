@@ -10,7 +10,7 @@ let expect = chai.expect
 
 describe('[mongodb available]', function(){
 
-  describe('[insert]', function(){
+  describe('Schema api check', function(){
 
     let PPT
 
@@ -19,75 +19,79 @@ describe('[mongodb available]', function(){
       done()
     })
 
-    after(function(done){
-      PPT.remove({}, function(){
-        done()
-      })
-    })
+    describe('schema static apis', function(){
 
-    it('should insert a PPT', function(done){
-      let ppt = new PPT({
-        creator:'testor',
-        title:'test title',
-        subTitle:'test sub-title',
-      })
-      ppt.save(function(err){
-        if(err){
-          console.log(err.toString())
-          throw new Error(err)
-        }
-
-        PPT.findOne({creator: 'testor'}, function(err, ppt){
-          expect(ppt).to.be.ok
-          expect(ppt.creator).to.be.equal('testor')
-          expect(ppt.title).to.be.equal('test title')
-          expect(ppt.subTitle).to.be.equal('test sub-title')
+      afterEach(function(done){
+        PPT.remove({}, function(){
           done()
         })
       })
-    })
 
-    it('should load ok', function(done){
-      let ppt = new PPT({
-        creator: 'testor01',
-        title:'test title',
-        subTitle:'test sub-title',
-        slides:{
-          head:'slide1',
-          content:'content1',
-          extras:{
-            k1:'v1',
-            k2:'v2',
-            k3:'v3'
+      it('should insert a PPT', function(done){
+        let ppt = new PPT({
+          creator:'testor',
+          title:'test title',
+          subTitle:'test sub-title',
+        })
+        ppt.save(function(err){
+          if(err){
+            console.log(err.toString())
+            throw new Error(err)
           }
-        }
-      })
 
-      ppt.save(function(err){
-        PPT.load({
-          criteria: {creator: 'testor01'},
-          select:'creator title subTitle modifiedOn createOn slides'
-        }, function(err, ppt){
-          expect(err).to.be.not.ok
-          expect(ppt).to.be.ok
-          expect(ppt.creator).to.be.equal('testor01')
-          expect(ppt.title).to.be.equal('test title')
-          expect(ppt.subTitle).to.be.equal('test sub-title')
-          expect(ppt.createOn).to.be.ok
-          expect(ppt.modifiedOn).to.be.ok
-          expect(ppt.slides).to.be.ok
-          expect(ppt.slides).to.have.length(1)
-          expect(ppt.slides[0].head).to.be.equal('slide1')
-          expect(ppt.slides[0].content).to.be.equal('content1')
-          expect(ppt.slides[0].extras).to.deep.equal({
-            k1:'v1',
-            k2:'v2',
-            k3:'v3'
+          PPT.findOne({creator: 'testor'}, function(err, ppt){
+            expect(ppt).to.be.ok
+            expect(ppt.creator).to.be.equal('testor')
+            expect(ppt.title).to.be.equal('test title')
+            expect(ppt.subTitle).to.be.equal('test sub-title')
+            done()
           })
-          expect(ppt.license).to.be.not.ok
-          done()
         })
       })
+
+      it('should load ok', function(done){
+        let ppt = new PPT({
+          creator: 'testor01',
+          title:'test title',
+          subTitle:'test sub-title',
+          slides:{
+            head:'slide1',
+            content:'content1',
+            extras:{
+              k1:'v1',
+              k2:'v2',
+              k3:'v3'
+            }
+          }
+        })
+
+        ppt.save(function(err){
+          PPT.load({
+            criteria: {creator: 'testor01'},
+            select:'creator title subTitle modifiedOn createOn slides'
+          }, function(err, ppt){
+            expect(err).to.be.not.ok
+            expect(ppt).to.be.ok
+            expect(ppt.creator).to.be.equal('testor01')
+            expect(ppt.title).to.be.equal('test title')
+            expect(ppt.subTitle).to.be.equal('test sub-title')
+            expect(ppt.createOn).to.be.ok
+            expect(ppt.modifiedOn).to.be.ok
+            expect(ppt.slides).to.be.ok
+            expect(ppt.slides).to.have.length(1)
+            expect(ppt.slides[0].head).to.be.equal('slide1')
+            expect(ppt.slides[0].content).to.be.equal('content1')
+            expect(ppt.slides[0].extras).to.deep.equal({
+              k1:'v1',
+              k2:'v2',
+              k3:'v3'
+            })
+            expect(ppt.license).to.be.not.ok
+            done()
+          })
+        })
+      })
+
     })
 
     describe('should general info save ok', function(){
@@ -254,7 +258,7 @@ describe('[mongodb available]', function(){
         })
 
         let slideInfo = [{
-          index:0,
+          index:1,
           head:'slide-new',
           content:'content-new',
           extras:{
@@ -293,6 +297,50 @@ describe('[mongodb available]', function(){
         })
       })
 
+
+    })
+
+    describe('search PPT', function(){
+
+      it('should search by title ok', function(done){
+        done()
+      })
+
+      it('should search by key ok, when there only one key', function(done){
+        done()
+      })
+
+      it('should search by key ok, when multi-keys exist', function(done){
+        done()
+      })
+
+      it('should title match comes first, then key matched records comes', function(done){
+        done()
+      })
+
+      it('should keys match order by priority, first comes first', function(done){
+        done()
+      })
+
+    })
+
+    describe('find PPT', function(){
+
+      it('should find all ppts by one creator', function(done){
+        done()
+      })
+
+      it('should default sort by create date', function(done){
+        done()
+      })
+
+      it('should can sort by stars', function(done){
+        done()
+      })
+
+      it('should can sort by status', function(done){
+        done()
+      })
 
     })
 
