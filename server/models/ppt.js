@@ -104,7 +104,6 @@ PPTSchema.statics = {
     .limit(opt.pageCount)
     .exec(cb)
   },
-
   findByUser(options, cb){
     let opt = Object.assign({
       select: _DefaultSelect,
