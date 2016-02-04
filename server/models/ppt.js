@@ -2,7 +2,7 @@ import mongoose from 'mongoose'
 
 const Schema = mongoose.Schema
 const _DefaultSelect = 'creator title subTitle modifiedOn keywords stars license'
-const _DefaultOrder = {'stars': -1, 'createOn': 1, 'status': -1}
+const _DefaultOrder = {'stars': -1, 'createOn': 1, 'status': -1, 'modifiedOn': -1}
 
 const PPTSchema = new Schema({
   creator:{type: String, default:'Anonymous', trim: true},
@@ -113,7 +113,6 @@ PPTSchema.statics = {
     }, options)
     opt.order = Object.assign({}, opt.order, _DefaultOrder, opt.order)//
 
-    console.log(opt.order)
     this.find({'creator': opt.user})
         .sort(opt.order)
         .select(opt.select)

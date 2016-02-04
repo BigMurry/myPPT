@@ -431,12 +431,12 @@ describe('[mongodb available]', function(){
         }, function(err, results){
           expect(err).to.be.not.ok
           expect(results).to.have.length(2)
-          expect(results[0].get('title')).to.be.equal('ppt1')
-          expect(results[0].get('creator')).to.be.equal('c1')
-          expect(results[0].get('keywords')).to.be.equal('k1;l1;h1')
-          expect(results[1].get('title')).to.be.equal('ppt2')
-          expect(results[1].get('creator')).to.be.equal('c2')
-          expect(results[1].get('keywords')).to.be.equal('k1;l2;h2')
+          expect(results[1].get('title')).to.be.equal('ppt1')
+          expect(results[1].get('creator')).to.be.equal('c1')
+          expect(results[1].get('keywords')).to.be.equal('k1;l1;h1')
+          expect(results[0].get('title')).to.be.equal('ppt2')
+          expect(results[0].get('creator')).to.be.equal('c2')
+          expect(results[0].get('keywords')).to.be.equal('k1;l2;h2')
           done()
         })
       })
@@ -462,12 +462,12 @@ describe('[mongodb available]', function(){
         }, function(err, results){
           expect(err).to.be.not.ok
           expect(results).to.have.length(2)
-          expect(results[0].get('title')).to.be.equal('ppt9-ppt9')
-          expect(results[0].get('creator')).to.be.equal('c4')
-          expect(results[0].get('keywords')).to.be.equal('k5k5;k5')
-          expect(results[1].get('title')).to.be.equal('ppt9ppt9')
+          expect(results[1].get('title')).to.be.equal('ppt9-ppt9')
           expect(results[1].get('creator')).to.be.equal('c4')
-          expect(results[1].get('keywords')).to.be.equal('k5-k5')
+          expect(results[1].get('keywords')).to.be.equal('k5k5;k5')
+          expect(results[0].get('title')).to.be.equal('ppt9ppt9')
+          expect(results[0].get('creator')).to.be.equal('c4')
+          expect(results[0].get('keywords')).to.be.equal('k5-k5')
           done()
         })
       })
@@ -480,8 +480,8 @@ describe('[mongodb available]', function(){
           expect(err).to.be.not.ok
           expect(results).to.have.length(3)
           expect(results[0].get('title')).to.be.equal('ppt12')
-          expect(results[1].get('title')).to.be.equal('ppt10')
-          expect(results[2].get('title')).to.be.equal('ppt11')
+          expect(results[1].get('title')).to.be.equal('ppt11')
+          expect(results[2].get('title')).to.be.equal('ppt10')
           done()
         })
       })
@@ -489,7 +489,7 @@ describe('[mongodb available]', function(){
     })
 
     describe('find PPT', function(){
-      this.timeout(10000)
+      this.timeout(1000)
       before(function(done){
         let ppts = []
         ppts.push(new PPT({
@@ -535,7 +535,7 @@ describe('[mongodb available]', function(){
             setTimeout(function(){
               if(--total) saveAll()
               else done()
-            }, 1000)
+            }, 100)
 
           })
         }
@@ -561,13 +561,13 @@ describe('[mongodb available]', function(){
       it('should sort default by: stars, create date, status', function(done){
         PPT.findByUser({
           user:'c1',
-          select:'title creator createOn stars keywords'
+          select:'title creator createOn stars keywords modifiedOn'
         }, function(err, results){
           expect(results).to.have.length(4)
           expect(results[0].get('title')).to.be.equal('ppt4')
           expect(results[1].get('title')).to.be.equal('ppt3')
-          expect(results[2].get('title')).to.be.equal('ppt1')
-          expect(results[3].get('title')).to.be.equal('ppt2')
+          expect(results[2].get('title')).to.be.equal('ppt2')
+          expect(results[3].get('title')).to.be.equal('ppt1')
           done()
         })
       })
