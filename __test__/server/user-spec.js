@@ -40,11 +40,34 @@ describe('user schema api', function(){
       done()
     })
 
+    it('should authenticate method works properly', function(done){
+      User.findOne({name:'testor'})
+          .exec(function(err, r){
+            expect(r.authenticate('pass')).to.be.ok
+            done()
+          })
+    })
+
+    it('should enryptPassword method works properly', function(done){
+      User.findOne({name:'testor'})
+          .exec(function(err, r){
+            expect(r.encryptPassword('pass1')).to.be.ok
+            done()
+          })
+    })
+
+    it('should makeSalt method works properly', function(done){
+      User.findOne({name:'testor'})
+          .exec(function(err, r){
+            expect(r.makeSalt()).to.be.ok
+            done()
+          })
+    })
+
     it('should get the created user document', function(done){
       User.findOne({name:'testor'})
           .select('name username email password hashed_password')
           .exec(function(err, r){
-            console.log(r)
             expect(r).to.be.ok
             expect(r.get('name')).to.be.equal('testor')
             expect(r.get('username')).to.be.equal('testor_nick')
@@ -57,16 +80,7 @@ describe('user schema api', function(){
     it('should get virtual password field', function(done){
       User.findOne({name:'testor'})
           .exec(function(err, r){
-            console.log(r)
             expect(r.get('password')).to.be.equal('pass')
-            done()
-          })
-    })
-
-    it('should authenticate method works properly', function(done){
-      User.findOne({name:'testor'})
-          .exec(function(err, r){
-            expect(r.authenticate('pass')).to.be.ok
             done()
           })
     })
