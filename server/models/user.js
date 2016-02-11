@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+import crypto from 'crypto'
 
 const Schema = mongoose.Schema
 
@@ -25,7 +26,7 @@ UserSchema
     this.hashed_password = this.encryptPassword(password)
   })
   .get(function(){
-    return this._password
+    return 'pass'
   })
 
 UserSchema.methods = {
@@ -33,8 +34,22 @@ UserSchema.methods = {
     return this.encryptPassword(plainText) === this.hashed_password
   },
 
-  makeSalt(){},
+  makeSalt(){
+    return Math.round(new Date().valueOf() * Math.random()) + ''
+  },
 
-  encryptPassword(plaintText){},
+  encryptPassword(plainText){
+    if(!plainText) return ''
+    try{
+      return crypto
+        .createHmac('sha1', this.salt)
+        .update(plainText)
+        .digest('hex')
+    }catch(err){
+      return ''
+    }
+  },
 
 }
+
+mongoose.model('User', UserSchema)
