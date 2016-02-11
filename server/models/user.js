@@ -26,6 +26,7 @@ UserSchema
     this.hashed_password = this.encryptPassword(password)
   })
   .get(function(){
+    //TODO: this should be changed
     return 'pass'
   })
 
