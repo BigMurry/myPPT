@@ -5,9 +5,34 @@ body {
   height: 100%;
 }
 .layout{
+  $hColor:rgb(207, 227, 115);
+  $hTop:5px;
   width:1024;
   margin:auto;
+  & .layout-head{
+    color:$hColor;
+    font-size:40px;
+    position:relative;
+    height:50px;
+    background-color:rgb(154, 120, 210);
+  }
+  & .layout-title{
+    position:absolute;
+    left:5px;
+    top:$hTop;
+  }
+  & .layout-menu{
+    position:absolute;
+    right:5px;
+    top:$hTop;
+  }
+  & .layout-foot{
+    position:fixed;
+    bottom:20px;
+    color:$hColor;
+  }
 }
+
 #root{
   position:fixed;
   top:10px;
