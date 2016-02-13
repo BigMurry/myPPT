@@ -10,8 +10,9 @@ let expect = chai.expect
 
 describe('[mongodb available]', function(){
   before(function(done){
-    mongoose.connect('mongodb://localhost/ppt_test')
-    done()
+    mongoose.connect('mongodb://localhost/ppt_test', {}, function(){
+      done()
+    })
   })
 
   after(function(done){
@@ -19,7 +20,7 @@ describe('[mongodb available]', function(){
       done()
     })
   })
-  
+
   describe('Schema api check', function(){
 
     let PPT

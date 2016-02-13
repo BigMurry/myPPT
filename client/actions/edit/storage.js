@@ -1,6 +1,6 @@
 import * as ActionTypes from '../../constants/ActionTypes'
 import {transformGeneralInfo, transformSlideInfo} from './editor'
-import API from '../../constants/api'
+import API from '../../../.config/api.conf'
 
 const TIME_OUT = 2000
 

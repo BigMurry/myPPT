@@ -22,10 +22,16 @@ app.get('*',function(req, res){
   res.sendFile(path.join(__dirname,'../client/index.html'))
 })
 
-app.listen(port, function(err){
-  if(err){
-    console.error(err)
-  }else{
-    console.info('Listen on port[' + port + ']')
-  }
-})
+if(process.env.NODE_ENV !== 'test'){
+  app.listen(port, function(err){
+    if(err){
+      console.error(err)
+    }else{
+      console.info('Listen on port[' + port + ']')
+    }
+  })
+}
+
+
+
+export {app}
