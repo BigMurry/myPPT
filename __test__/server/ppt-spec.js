@@ -4,12 +4,22 @@ import mongoose from 'mongoose'
 //import the models for side effects only, without importing any bindings
 import '../../server/models'
 
-mongoose.connect('mongodb://localhost/ppt_test')
+//mongoose.connect('mongodb://localhost/ppt_test')
 
 let expect = chai.expect
 
 describe('[mongodb available]', function(){
+  before(function(done){
+    mongoose.connect('mongodb://localhost/ppt_test')
+    done()
+  })
 
+  after(function(done){
+    mongoose.connection.close(function(){
+      done()
+    })
+  })
+  
   describe('Schema api check', function(){
 
     let PPT
@@ -606,7 +616,5 @@ describe('[mongodb available]', function(){
 
   })
 
-  after(function(){
-    mongoose.connection.close()
-  })
+
 })

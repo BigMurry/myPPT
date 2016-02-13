@@ -5,21 +5,24 @@ import '../../server/models'
 const expect = chai.expect
 
 //mongoose.connect('mongodb://localhost/ppt_test')
-mongoose.connect('mongodb://localhost/ppt_test2')
+//mongoose.connect('mongodb://localhost/ppt_test2')
 
 describe('user schema api', function(){
 
   let User
   before(function(done){
-    User = mongoose.model('User')
-    done()
+    mongoose.connect('mongodb://localhost/ppt_test',{}, function(){
+      User = mongoose.model('User')
+      done()
+    })
   })
 
   after(function(done){
     User.remove({}, function(){
-      done()
+      mongoose.connection.close(function(){
+        done()
+      })
     })
-    mongoose.connection.close()
   })
 
   describe('virtual field', function(){
