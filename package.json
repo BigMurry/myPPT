@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "start": "NODE_ENV=development node server/index.js",
+    "build": "NODE_ENV=production gulp build",
     "dev": "NODE_ENV=test gulp",
     "test": "NODE_ENV=test gulp test"
   },
@@ -44,10 +45,12 @@
     "exports-loader": "^0.6.3",
     "file-loader": "^0.8.5",
     "gulp": "^3.9.0",
+    "gulp-babel": "^6.1.2",
     "gulp-load-plugins": "^1.2.0",
     "gulp-mocha": "^2.2.0",
     "gulp-rename": "^1.2.2",
     "gulp-shell": "^0.5.2",
+    "gulp-util": "^3.0.7",
     "imports-loader": "^0.6.5",
     "karma": "^0.13.19",
     "karma-chai": "^0.1.0",
