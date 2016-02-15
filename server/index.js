@@ -12,7 +12,7 @@ import config from '../.config/webpack.test.config'
 const port = 4500
 let app = express()
 
-//development only
+//NOTE:development only
 if(process.env.NODE_ENV === 'development'){
   let compiler = webpack(config)
   app.use(webpackDevMiddleware(compiler, {
@@ -27,7 +27,7 @@ if(process.env.NODE_ENV === 'development'){
 
 routes(app)
 
-//development and production
+//NOTE:development and production
 if(process.env.NODE_ENV !== 'test'){
   app.listen(port, function(err){
     if(err){
