@@ -2,15 +2,20 @@ import mongoose from 'mongoose'
 import chai from 'chai'
 import request from 'supertest'
 import '../../server/models'
-import API from '../../.config/api.conf'
 import {app} from '../../server'
 
 const {expect} = chai
 
 describe('[route test]', function(){
-
-
-
+  let API
+  before(function(){
+    API = {
+      STORE_GENERAL:'/general/save',
+      STORE_SLIDE:'/slide/save',
+      DELETE_GENERAL:'general/del',
+      DELETE_SLIDE:'/slide/del',
+    }
+  })
   describe('route request only', function(){
     it('should API.STORE_GENERAL => 200', function(done){
       request(app)
