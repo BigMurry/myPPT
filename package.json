@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "NODE_ENV=development node server/index.js",
-    "start":"NODE_ENV=development gulp build-server && node lib/index.js",
+    "start": "NODE_ENV=development gulp build-server && node lib/index.js",
     "build": "NODE_ENV=production gulp build",
     "autoTest": "NODE_ENV=test gulp",
     "test": "NODE_ENV=test gulp test"
@@ -17,6 +17,7 @@
     "babelify": "^7.2.0",
     "classnames": "^2.2.2",
     "co": "^4.6.0",
+    "co-express": "^1.2.1",
     "express": "^4.13.3",
     "history": "^1.17.0",
     "kerberos": "0.0.18",

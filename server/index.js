@@ -3,11 +3,13 @@
 import path from 'path'
 import routes from './routes'
 import express from 'express'
+import bodyParser from 'body-parser'
 
 import webpack from 'webpack'
 import webpackDevMiddleware from 'webpack-dev-middleware'
 import webpackHotMiddleware from 'webpack-hot-middleware'
 import config from '../.config/webpack.test.config'
+
 
 const port = 4500
 let app = express()
@@ -22,6 +24,7 @@ if(process.env.NODE_ENV === 'development'){
   app.use(webpackHotMiddleware(compiler))
 }
 
+app.use(bodyParser.json())
 //serve static files
 //app.use('/static/',express.static(path.join(__dirname, 'dist')))
 

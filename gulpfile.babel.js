@@ -14,6 +14,7 @@ import {spawn} from 'child_process'
 import gulpLoadPlugins from 'gulp-load-plugins'
 import {Server} from 'karma'
 //import pkg from './package.json'
+import 'babel-polyfill'
 
 const $ = gulpLoadPlugins()
 
