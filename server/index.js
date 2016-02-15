@@ -1,16 +1,20 @@
-var path = require('path')
-var routes = require('./routes')
+'use strict'
 
-var express = require('express')
-var app = express()
-var port = 4500
+import path from 'path'
+import routes from './routes'
+import express from 'express'
 
-if(process.env.NODE_ENV === 'test'){
-  var webpack = require('webpack')
-  var webpackDevMiddleware = require('webpack-dev-middleware')
-  var webpackHotMiddleware= require('webpack-hot-middleware')
-  var config = require('../.config/webpack.test.config')
-  var compiler = webpack(config)
+import webpack from 'webpack'
+import webpackDevMiddleware from 'webpack-dev-middleware'
+import webpackHotMiddleware from 'webpack-hot-middleware'
+import config from '../.config/webpack.test.config'
+
+const port = 4500
+let app = express()
+
+//development only
+if(process.env.NODE_ENV === 'development'){
+  let compiler = webpack(config)
   app.use(webpackDevMiddleware(compiler, {
     noInfo: true,
     publicPath: config.output.publicPath
@@ -23,7 +27,8 @@ if(process.env.NODE_ENV === 'test'){
 
 routes(app)
 
-if(process.env.NODE_ENV === 'production'){
+//development and production
+if(process.env.NODE_ENV !== 'test'){
   app.listen(port, function(err){
     if(err){
       console.error(err)

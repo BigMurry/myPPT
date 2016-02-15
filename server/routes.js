@@ -1,4 +1,3 @@
-import API from '../.config/api.conf'
 import ppts from './controllers/ppts'
 import path from 'path'
 
@@ -11,8 +10,9 @@ export default function routes (app){
   app.get('*',function(req, res){
     res.sendFile(index)
   })
-  app.post(API.STORE_GENERAL, ppts.saveGeneral )
-  app.post(API.STORE_SLIDE, ppts.saveSlide)
-  app.delete(API.DELETE_GENERAL, ppts.deleteSlide)
-  app.delete(API.DELETE_SLIDE, ppts.deleteGeneral)
+
+  //app.post('/general/save', ppts.saveGeneral )
+  //app.post('/slide/save', ppts.saveSlide)
+  //app.delete('/slide/del', ppts.deleteSlide)
+  //app.delete('/general/del', ppts.deleteGeneral)
 }
