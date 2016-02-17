@@ -12,6 +12,8 @@ const SlideSchema = new Schema({
   keywords:{type: String, default:'', trim: true},
   desrciption:{type: String, default:'', trim: true},
   content:{type: String, default:'', trim: true},
+  createOn:{type: Date, default: Date.now()},
+  modifiedOn:{type: Date, default: Date.now()},
   theme:{},
   B:{type: Schema.ObjectId, ref:'Slide'},
   A:{type: Schema.ObjectId, ref:'Slide'},
@@ -22,8 +24,13 @@ const SlideSchema = new Schema({
   }]
 })
 
-SlideSchema.methods = {
+SlideSchema.pre('save',(next) => {
 
+})
+
+SlideSchema.methods = {
+  search(){},
+  save(){},
 }
 
 SlideSchema.statics = {
