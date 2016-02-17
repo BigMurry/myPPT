@@ -1,6 +1,7 @@
 import mongoose from 'mongoose'
 import crypto from 'crypto'
 
+const _DefaultSelect = 'name email username'
 const Schema = mongoose.Schema
 
 const UserSchema = new Schema({
@@ -50,7 +51,17 @@ UserSchema.methods = {
       return ''
     }
   },
+}
 
+UserSchema.statics = {
+  load(options, cb){
+    options.select = options.select || _DefaultSelect
+    this.findOne(options.criteria)
+        .select(options.select)
+        .exec(cb)
+  },
 }
 
 mongoose.model('User', UserSchema)
+
+export {UserSchema}

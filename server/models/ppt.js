@@ -119,7 +119,7 @@ PPTSchema.statics = {
         .limit(opt.pageCount)
         .exec(cb)
   },
-
 }
 
 mongoose.model('PPT', PPTSchema)
+export {PPTSchema}
