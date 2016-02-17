@@ -22,4 +22,12 @@ const SlideSchema = new Schema({
   }]
 })
 
+SlideSchema.methods = {
+
+}
+
+SlideSchema.statics = {
+
+}
+
 mongoose.model('Slide', SlideSchema)
