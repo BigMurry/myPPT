@@ -31,6 +31,10 @@ UserSchema
     return 'pass'
   })
 
+UserSchema.path('email').validate(function(email){
+  return /^[-0-9a-zA-Z_]+[-0-9a-zA-Z._]*@[-0-9a-zA-Z_]+(\.[-0-9a-zA-Z_]+)*\.(com|org|cn|net)$/.test(email)
+}, 'email format is invalid')
+
 UserSchema.methods = {
   authenticate(plainText){
     return this.encryptPassword(plainText) === this.hashed_password
