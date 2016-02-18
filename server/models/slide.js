@@ -6,7 +6,8 @@ const _DefaultSelect = 'creator name version modifiedOn keywords stars license'
 const _DefaultOrder = {'stars': -1, 'createOn': 1, 'modifiedOn': -1}
 const User = mongoose.model('User', UserSchema)
 
-const getStars = stars => stars.length
+const getKeywords = keywords => keywords.join(';')
+const setKeywords = keywords => keywords.split(';')
 
 //NOTE: B => Biography; A => Acknowlegement
 const SlideSchema = new Schema({
@@ -17,19 +18,19 @@ const SlideSchema = new Schema({
     default:'0.0.0',
     validate:{
       validator: (v) => {
-        return /d{1,}\.d{1,}\.d{1,}/.test(v)
+        return /\d+\.\d+\.\d+/.test(v)
       },
       message:'{VALUE} is not a valid version number'
     },
     trim: true
   },
-  keywords:{type: String, default:'', trim: true},
+  keywords:{type: [], set: setKeywords, get: getKeywords},
   desrciption:{type: String, default:'', trim: true},
   license:{type: String, default: '', trim: true},
-  stars:{type:[{
+  stars:[{
     user: {type: Schema.ObjectId, ref: 'User'},
     at: {type: Date},
-  }], get: getStars},
+  }],
   content:{type: String, default:'', trim: true},
   createOn:{type: Date, default: Date.now()},
   modifiedOn:{type: Date, default: Date.now()},
