@@ -4,8 +4,9 @@ import {UserSchema} from './user'
 const Schema = mongoose.Schema
 const _DefaultSelect = 'creator name version modifiedOn keywords stars license'
 const _DefaultOrder = {'stars': -1, 'createOn': 1, 'modifiedOn': -1}
-
 const User = mongoose.model('User', UserSchema)
+
+const getStars = stars => stars.length
 
 //NOTE: B => Biography; A => Acknowlegement
 const SlideSchema = new Schema({
@@ -25,10 +26,10 @@ const SlideSchema = new Schema({
   keywords:{type: String, default:'', trim: true},
   desrciption:{type: String, default:'', trim: true},
   license:{type: String, default: '', trim: true},
-  stars:[{
+  stars:{type:[{
     user: {type: Schema.ObjectId, ref: 'User'},
-    date: {type: Date},
-  }],
+    at: {type: Date},
+  }], get: getStars},
   content:{type: String, default:'', trim: true},
   createOn:{type: Date, default: Date.now()},
   modifiedOn:{type: Date, default: Date.now()},
@@ -45,7 +46,6 @@ const SlideSchema = new Schema({
 SlideSchema.path('creator').required(true, 'creator should not be empty')
 SlideSchema.path('content').required(true, 'slide content should not be empty')
 
-
 SlideSchema.pre('save', function(next){
   this.modifiedOn = Date.now()
   next()
@@ -56,10 +56,12 @@ SlideSchema.methods = {
     this.A = slideA
     return this.save()
   },
+
   linkB(slideB){
     this.B = slideB
     return this.save()
   },
+
   removeRefs(refId){
     let refIds = []
     if(Array.isArray(refIds)){
@@ -80,15 +82,19 @@ SlideSchema.methods = {
     return this.save()
   },
 
-  starify(userId){
+  canStar(userId){
     const index =
       this.stars
       .map(r => r.user)
       .indexOf(userId)
-    if(!~index){
+    return !~index
+  },
+
+  starify(userId){
+    if(this.canStar(userId)){
       this.stars.push({
         user: userId,
-        date: Date.now()
+        at: Date.now()
       })
     }else{
       throw new Error('current user has already stared')
@@ -125,6 +131,7 @@ SlideSchema.statics = {
     .limit(opt.pageCount)
     .exec(cb)
   },
+
   findByUser(options, cb){
     let opt = Object.assign({
       select: _DefaultSelect,
@@ -145,6 +152,7 @@ SlideSchema.statics = {
         .exec(cb)
     })
   },
+
   save(){}
 }
 
