@@ -33,7 +33,7 @@ describe('[slide model]', function(){
     after(function(done){
       const u = User.remove({})
       const s = Slide.remove({})
-      Promise.all([u, s]).then(function(errs){
+      BPromise.all([u, s]).then(function(errs){
         done()
       })
     })
@@ -132,5 +132,114 @@ describe('[slide model]', function(){
 
   })
 
-  describe('statics', function(){})
+  describe('statics', function(){
+    let slide, slide2, user
+
+    after(function(done){
+      const u = User.remove({})
+      const s = Slide.remove({})
+
+      BPromise.all([u, s])
+        .then(() => {
+          done()
+        })
+    })
+
+    it('should user have _id', function(done){
+      user = new User({
+        name:'testor1',
+        username:'user1',
+        email:'testor1@demo.org',
+        password:'pass',
+      })
+      user.save()
+        .then(function(u){
+          expect(u).to.be.ok
+          expect(u._id).to.be.ok
+          done()
+        })
+    })
+
+    it('should slide have _id', function(done){
+      slide = new Slide({
+        creator: user._id,
+        name:'static-slide1',
+        content:'static slide1 content',
+      })
+
+      slide.save()
+        .then(function(s){
+          expect(s).to.be.ok
+          expect(s._id).to.be.ok
+          expect(s.creator).to.be.equal(user._id)
+          done()
+        })
+    })
+
+    it('should find one record, when searching `static-slide1` by name', function(done){
+      const opt = {
+        key:'static-slide1'
+      }
+      Slide.search(opt, function(err, s){
+        expect(s).to.have.length(1)
+        done()
+      })
+    })
+
+    it('should search support `select`', function(done){
+      const opt = {
+        select:'name creator keywords',
+        key:'static-slide1',
+      }
+
+      Slide.search(opt, function(err, s){
+        console.log(s[0])
+        expect(s).to.have.length(1)
+        expect(s[0]).to.have.property('name', 'static-slide1')
+        expect(s[0]).to.have.property('creator')
+          .that.deep.equals(user._id)
+        expect(s[0]).to.have.property('keywords', '')
+        expect(s[0]).to.have.property('content').that.to.be.not.ok
+        done()
+      })
+    })
+
+    it('should slide2 have valid _id', function(done){
+      slide2 = new Slide({
+        creator: user._id,
+        name:'static-slide2',
+        content:'static slide2 content',
+      })
+
+      slide2.save()
+        .then(function(s){
+          expect(s).to.be.ok
+          expect(s._id).to.be.ok
+          done()
+        })
+    })
+
+    it('should search two slides and sort by `createOn` DESC', function(done){
+      const opt = {
+        key:'static',
+        order:{createOn: -1},
+      }
+      Slide.search(opt, function(err, s){
+        expect(s).to.have.length(2)
+        expect(s[1]).to.have.property('name', 'static-slide1')
+        expect(s[0]).to.have.property('name', 'static-slide2')
+        done()
+      })
+    })
+
+    it('should find two slides for user `user1`', function(done){
+      const opt = {
+        user: user.username
+      }
+      Slide.findByUser(opt, function(err, s){
+        expect(s).to.have.length(2)
+        done()
+      })
+    })
+  })
 })

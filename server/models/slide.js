@@ -144,7 +144,7 @@ SlideSchema.statics = {
       select:'_id name username',
       criteria:{username: opt.user}
     }
-    User.load(userOpt, (user) => {
+    User.load(userOpt, (err, user) => {
       this.find({'creator': user._id})
         .sort(opt.order)
         .select(opt.select)

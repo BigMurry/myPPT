@@ -9,7 +9,7 @@
     "autoTest": "NODE_ENV=test gulp",
     "test": "NODE_ENV=test gulp test"
   },
-  "main": "client/client.html",
+  "main": "server/index.js",
   "dependencies": {
     "babel-core": "^6.3.26",
     "babel-polyfill": "^6.3.14",
