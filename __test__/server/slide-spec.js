@@ -193,7 +193,6 @@ describe('[slide model]', function(){
       }
 
       Slide.search(opt, function(err, s){
-        console.log(s[0])
         expect(s).to.have.length(1)
         expect(s[0]).to.have.property('name', 'static-slide1')
         expect(s[0]).to.have.property('creator')
