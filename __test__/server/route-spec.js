@@ -3,6 +3,13 @@ import chai from 'chai'
 import request from 'supertest'
 import '../../server/models'
 import {app} from '../../server'
+import BPromise from 'bluebird'
+import debug from 'debug'
+
+const logger = debug('myapp')
+
+const Slide = mongoose.model('Slide')
+const User = mongoose.model('User')
 
 const {expect} = chai
 
@@ -27,7 +34,7 @@ describe('[route test]', function(){
     })
   })
 
-  describe('route request only', function(){
+  describe('get slide', function(){
     //it('should API.STORE_GENERAL => 200', function(done){
       //request(app)
       //  .post(API.STORE_GENERAL)
@@ -42,31 +49,60 @@ describe('[route test]', function(){
       //  })
     //})
 
-    it('should API.STORE_SLIDE => 200', function(){
-    })
-
-    it('should call save slide info ok', function(){
-
-    })
-  })
-
-  describe('route with db store', function(){
-    before(function(done){
-      done()
-    })
-
     after(function(done){
-      done()
+      const s = Slide.remove({})
+      const u = User.remove({})
+      BPromise.all([s, u])
+      .then(function(errs){
+        done()
+      })
     })
 
-    it('should save the general info in DB', function(){
 
+    let slide1, testor1
+    it('should testor1 saved & has an id', function(done){
+      testor1 = new User({
+        name:'user1',
+        username: 'testor1',
+        password: 'pass',
+        email: 'testor1@demo.com'
+      })
+      testor1.save()
+      .then(function(t){
+        expect(t).to.be.ok
+        expect(t._id).to.be.ok
+        done()
+      })
     })
 
-    it('should save the slide info in the DB', function(){
+    it('should slide saved & has an id', function(done){
+      slide1 = new Slide({
+        creator: testor1._id,
+        name: 'slide1',
+        content:'slide1 content'
+      })
+      slide1.save()
+      .then(function(s){
+        expect(s).to.be.ok
+        expect(s._id).to.be.ok
+        done()
+      })
+    })
 
+    it('send request should get the slide by id', function(done){
+      request(app)
+        .get(`/slide/get/${slide1._id}`)
+        .expect(200)
+        .end((err, res) => {
+          if(err) done(err)
+          expect(res).to.be.ok
+          expect(res.body).to.be.ok
+          expect(res.body.creator).to.be.equals(testor1._id.toString())
+          expect(res.body.name).to.be.equal('slide1')
+          //console.log(res)
+          done()
+        })
     })
   })
-
 
 })

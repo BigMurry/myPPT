@@ -106,6 +106,10 @@ SlideSchema.methods = {
 }
 
 SlideSchema.statics = {
+  load(_id){
+    return this.findOne({_id})
+      .exec()
+  },
   search(options){
     let opt = Object.assign({
       select: _DefaultSelect,

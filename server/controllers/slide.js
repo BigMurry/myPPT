@@ -1,14 +1,19 @@
 import wrap from 'co-express'
 import mongoose from 'mongoose'
 import BPromise from 'bluebird'
+import debug from 'debug'
+
+const logger = debug('myapp')
 
 mongoose.Promise = BPromise
 
 const Slide = mongoose.model('Slide')
-export default {
 
+export default {
   load: wrap(function* (req, res, next, id){
+    logger('in param load function')
     req.slide = yield Slide.load(id)
+    logger('load finish')
     if(!req.slide) next(new Error('can not find the corresponding slide'))
     next()
   }),
@@ -34,5 +39,4 @@ export default {
   deleteSlide: wrap(function* (req, res){
 
   })
-
 }

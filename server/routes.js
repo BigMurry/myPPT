@@ -2,6 +2,9 @@
 
 //import ppts from './controllers/ppts'
 import Slide from './controllers/slide'
+import debug from 'debug'
+
+const logger = debug('myapp')
 
 const{
   load,
@@ -19,9 +22,7 @@ export default function routes (app){
   if(process.env.NODE_ENV === 'production'){
     index =  path.join(__dirname, '../dist/index.html')
   }
-  app.get('*',function(req, res){
-    res.sendFile(index)
-  })
+
 
 //  app.post('/general/save', saveGeneral )
 //  app.post('/slide/save', saveSlide)
@@ -32,4 +33,8 @@ export default function routes (app){
   app.get('/slide/search', search)
   app.post('/slide/save', saveSlide)
   app.delete('/slide/del/:id', deleteSlide)
+
+  app.get('/',function(req, res){
+    res.sendFile(index)
+  })
 }
