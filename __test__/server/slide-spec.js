@@ -180,7 +180,8 @@ describe('[slide model]', function(){
       const opt = {
         key:'static-slide1'
       }
-      Slide.search(opt, function(err, s){
+      Slide.search(opt)
+      .then(function(s){
         expect(s).to.have.length(1)
         done()
       })
@@ -192,7 +193,8 @@ describe('[slide model]', function(){
         key:'static-slide1',
       }
 
-      Slide.search(opt, function(err, s){
+      Slide.search(opt)
+      .then(function(s){
         expect(s).to.have.length(1)
         expect(s[0]).to.have.property('name', 'static-slide1')
         expect(s[0]).to.have.property('creator')
@@ -223,7 +225,8 @@ describe('[slide model]', function(){
         key:'static',
         order:{createOn: -1},
       }
-      Slide.search(opt, function(err, s){
+      Slide.search(opt)
+      .then(function(s){
         expect(s).to.have.length(2)
         expect(s[1]).to.have.property('name', 'static-slide1')
         expect(s[0]).to.have.property('name', 'static-slide2')
@@ -235,7 +238,8 @@ describe('[slide model]', function(){
       const opt = {
         user: user.username
       }
-      Slide.findByUser(opt, function(err, s){
+      Slide.findByUser(opt)
+      .then(function(s){
         expect(s).to.have.length(2)
         done()
       })

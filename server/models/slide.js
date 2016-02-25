@@ -1,5 +1,6 @@
 import mongoose from 'mongoose'
 import {UserSchema} from './user'
+import BPromise from 'bluebird'
 
 const Schema = mongoose.Schema
 const _DefaultSelect = 'creator name version modifiedOn keywords stars license'
@@ -105,7 +106,7 @@ SlideSchema.methods = {
 }
 
 SlideSchema.statics = {
-  search(options, cb){
+  search(options){
     let opt = Object.assign({
       select: _DefaultSelect,
       pageCount:10,
@@ -125,15 +126,15 @@ SlideSchema.statics = {
       }
     }
 
-    this.find(criteria)
+    return this.find(criteria)
     .sort(opt.order)
     .select(opt.select)
     .skip(opt.pageCount * (opt.pageNumber -1))
     .limit(opt.pageCount)
-    .exec(cb)
+    .exec()
   },
 
-  findByUser(options, cb){
+  findByUser(options){
     let opt = Object.assign({
       select: _DefaultSelect,
       pageCount: 10,
@@ -144,13 +145,17 @@ SlideSchema.statics = {
       select:'_id name username',
       criteria:{username: opt.user}
     }
-    User.load(userOpt, (err, user) => {
-      this.find({'creator': user._id})
-        .sort(opt.order)
-        .select(opt.select)
-        .skip(opt.pageCount * (opt.pageNumber -1))
-        .limit(opt.pageCount)
-        .exec(cb)
+    return new BPromise((resolve, reject) => {
+      User.load(userOpt, (err, user) => {
+        this.find({'creator': user._id})
+          .sort(opt.order)
+          .select(opt.select)
+          .skip(opt.pageCount * (opt.pageNumber -1))
+          .limit(opt.pageCount)
+          .exec()
+          .then(resolve)
+          .catch(reject)
+      })
     })
   },
 

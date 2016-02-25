@@ -9,7 +9,7 @@ export default {
   saveGeneral: wrap(function* (req, res, next){
     const ppt = new PPT(req.body)
     yield ppt.save()
-    res.send('hello')
+    res.json({error: false, msg: 'save successfull.'})
   }),
   saveSlide: wrap(function* (req, res, next){
     const ppt = new PPT(req.body)
