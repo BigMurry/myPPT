@@ -43,7 +43,12 @@ export default {
   }),
 
   saveSlide: wrap(function* (req, res){
-
+    if(!req.body){
+      res.json({error: true, msg: 'no binding data found'})
+    }
+    const slide = new Slide(req.body)
+    yield slide.save()
+    res.json({error: false, data: {_id: slide._id}})
   }),
 
   deleteSlide: wrap(function* (req, res){

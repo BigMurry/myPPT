@@ -150,6 +150,26 @@ describe('[route test]', function(){
           done()
         })
     })
+
+    it('send request should save the slide in DB', function(done){
+      request(app)
+        .post('/slide/save')
+        .send({
+          name: 'slide3',
+          creator: testor1._id,
+          content:'slide3 content',
+          keywords:'k1;k2;k3'
+        })
+        .expect(200)
+        .end((err, res) => {
+          expect(res).to.be.ok
+          expect(res.body).to.be.ok
+          expect(res.body.error).to.be.false
+          expect(res.body.data).to.be.ok
+          expect(res.body.data._id).to.be.ok
+          done()
+        })
+    })
   })
 
 })
