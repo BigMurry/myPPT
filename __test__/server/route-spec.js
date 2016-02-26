@@ -59,7 +59,7 @@ describe('[route test]', function(){
     })
 
 
-    let slide1, testor1
+    let slide1, slide2, testor1
     it('should testor1 saved & has an id', function(done){
       testor1 = new User({
         name:'user1',
@@ -116,6 +116,37 @@ describe('[route test]', function(){
           expect(res.body).to.have.length(1)
           expect(res.body[0].creator).to.be.equal(testor1._id.toString())
           expect(res.body[0].name).to.be.equal('slide1')
+          done()
+        })
+    })
+
+    it('should slide2 be saved & have an _id', function(done){
+      slide2 = new Slide({
+        name:'slide2',
+        keywords:'k1;k2;k3',
+        creator: testor1._id,
+        content:'slide2 content'
+      })
+      slide2.save()
+      .then(s => {
+        expect(s).to.be.ok
+        expect(s._id).to.be.ok
+        done()
+      })
+    })
+
+    it('send request should get the slide by creator name', function(done){
+      request(app)
+        .post('/slide/getby')
+        .send({
+          user: testor1.username
+        })
+        .expect(200)
+        .end((err, res) => {
+          expect(res).to.be.ok
+          expect(res.body).to.have.length(2)
+          expect(res.body[0].name).to.be.equal('slide2')
+          expect(res.body[1].name).to.be.equal('slide1')
           done()
         })
     })

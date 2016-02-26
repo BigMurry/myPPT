@@ -32,6 +32,16 @@ export default {
     res.json(req.slide)
   }),
 
+  getSlideByCreator: wrap(function* (req, res){
+    if(!req.body.user){
+      res.json({error: false, msg: 'creator name empty'})
+    }
+    const slides = yield Slide.findByUser({
+      user: req.body.user
+    })
+    res.json(slides)
+  }),
+
   saveSlide: wrap(function* (req, res){
 
   }),
