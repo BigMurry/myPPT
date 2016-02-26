@@ -151,15 +151,17 @@ describe('[route test]', function(){
         })
     })
 
+    let slide3
     it('send request should save the slide in DB', function(done){
+      slide3 = {
+        name: 'slide3',
+        creator: testor1._id,
+        content:'slide3 content',
+        keywords:'k1;k2;k3'
+      }
       request(app)
         .post('/slide/save')
-        .send({
-          name: 'slide3',
-          creator: testor1._id,
-          content:'slide3 content',
-          keywords:'k1;k2;k3'
-        })
+        .send(slide3)
         .expect(200)
         .end((err, res) => {
           expect(res).to.be.ok
@@ -167,6 +169,37 @@ describe('[route test]', function(){
           expect(res.body.error).to.be.false
           expect(res.body.data).to.be.ok
           expect(res.body.data._id).to.be.ok
+          slide3._id = res.body.data._id
+          done()
+        })
+    })
+
+    it('send request should update the exsiting slide', function(done){
+      request(app)
+        .post('/slide/save')
+        .send({
+          _id: slide3._id,
+          name: 'slide3-new',
+          keywords: 'k1-new;k2;'
+        })
+        .expect(200)
+        .end((err, res) => {
+          expect(res).to.be.ok
+          expect(res.body).to.be.ok
+          expect(res.body.data).to.be.ok
+          expect(res.body.data._id).to.be.ok
+          done()
+        })
+    })
+
+    it('send request should get the new name of slide3', function(done){
+      request(app)
+        .get(`/slide/get/${slide3._id}`)
+        .expect(200)
+        .end((err, res) => {
+          expect(res).to.be.ok
+          expect(res.body).to.be.ok
+          expect(res.body.name).to.be.equal('slide3-new')
           done()
         })
     })

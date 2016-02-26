@@ -26,6 +26,7 @@
     "kerberos": "0.0.18",
     "marked": "^0.3.5",
     "mongoose": "^4.3.7",
+    "only": "0.0.2",
     "react": "^0.14.3",
     "react-bootstrap": "^0.28.2",
     "react-dom": "^0.14.3",

@@ -2,6 +2,7 @@ import wrap from 'co-express'
 import mongoose from 'mongoose'
 import BPromise from 'bluebird'
 import debug from 'debug'
+import only from 'only'
 
 const logger = debug('myapp')
 
@@ -46,7 +47,13 @@ export default {
     if(!req.body){
       res.json({error: true, msg: 'no binding data found'})
     }
-    const slide = new Slide(req.body)
+    let slide
+    if(req.body._id){//udpate
+      slide = yield Slide.load(req.body._id)
+      Object.assign(slide, only(req.body, 'content name description keywords license'))
+    }else{//new record
+      slide = new Slide(req.body)
+    }
     yield slide.save()
     res.json({error: false, data: {_id: slide._id}})
   }),
