@@ -103,6 +103,22 @@ describe('[route test]', function(){
           done()
         })
     })
+
+    it('send request should search the slide by key', function(done){
+      request(app)
+        .post(`/slide/search`)
+        .send({
+          key:'slide1'
+        })
+        .expect(200)
+        .end((err, res) => {
+          expect(res).to.be.ok
+          expect(res.body).to.have.length(1)
+          expect(res.body[0].creator).to.be.equal(testor1._id.toString())
+          expect(res.body[0].name).to.be.equal('slide1')
+          done()
+        })
+    })
   })
 
 })

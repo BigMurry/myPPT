@@ -30,7 +30,7 @@ export default function routes (app){
 //  app.delete('/general/del', deleteGeneral)
   app.param('id', load)
   app.get('/slide/get/:id', loadSlide)
-  app.get('/slide/search', search)
+  app.post('/slide/search', search)
   app.post('/slide/save', saveSlide)
   app.delete('/slide/del/:id', deleteSlide)
 
