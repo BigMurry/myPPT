@@ -1,6 +1,6 @@
 # myPPT
 
-[![Travis][travis-badge][build]]
+[![Travis][travis-badge]][build]
 
 ## my react ppt test app
 
