@@ -24,12 +24,23 @@ export default function routes (app){
     index =  path.join(__dirname, '../dist/index.html')
   }
 
-
 //  app.post('/general/save', saveGeneral )
 //  app.post('/slide/save', saveSlide)
 //  app.delete('/slide/del', deleteSlide)
 //  app.delete('/general/del', deleteGeneral)
   app.param('id', load)
+  app.route('/slide/:id')
+    .get(loadSlide)//load slide
+    .put(saveSlide)//update slide
+    .post(createSlide)//create new
+    .delete(deleteSlide)//delete slide
+  app.post('/login', login)
+  app.post('/logout', logout)
+
+  app.post('/search', search)
+
+  app.get('/slides', getByUser)
+
   app.get('/slide/get/:id', loadSlide)
   app.post('/slide/search', search)
   app.post('/slide/getby', getSlideByCreator)
