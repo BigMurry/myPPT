@@ -6,6 +6,7 @@
 
 myPPT use [Semantic Versioning](http://semver.org/), you can find the version in the package.json file in the root directory of the app.
 
-- this version will be changed to Relay and GraphQL
+- this is the original version using Redux and REST API
+
 [travis-badge]:https://travis-ci.org/BigMurry/myPPT.svg?branch=master
 [build]:https://travis-ci.org/BigMurry/myPPT/
