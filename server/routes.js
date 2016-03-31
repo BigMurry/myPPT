@@ -1,6 +1,7 @@
 'use strict'
 
 //import ppts from './controllers/ppts'
+import './models'
 import Slide from './controllers/slide'
 import debug from 'debug'
 
@@ -32,14 +33,14 @@ export default function routes (app){
   app.route('/slide/:id')
     .get(loadSlide)//load slide
     .put(saveSlide)//update slide
-    .post(createSlide)//create new
+    //.post(createSlide)//create new
     .delete(deleteSlide)//delete slide
-  app.post('/login', login)
-  app.post('/logout', logout)
+  //app.post('/login', login)
+  //app.post('/logout', logout)
 
   app.post('/search', search)
 
-  app.get('/slides', getByUser)
+  //app.get('/slides', getByUser)
 
   app.get('/slide/get/:id', loadSlide)
   app.post('/slide/search', search)
